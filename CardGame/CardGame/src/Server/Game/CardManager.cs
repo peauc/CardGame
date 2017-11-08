@@ -15,10 +15,10 @@
         {
             this.Cards = new List<Card>();
             this.CurrentTrump = Contract.Types.Type.Undefined;
-            this.ScoreByValueByScaleDictionary = new Dictionary<CardManager.ScoreScale, Dictionary<Card.Types.Value, int>>
+            this.ScoreByValueByScaleDictionary = new Dictionary<ScoreScale, Dictionary<Card.Types.Value, int>>
                                                      {
                                                          {
-                                                             CardManager.ScoreScale.Standard,
+                                                             ScoreScale.Standard,
                                                              new Dictionary<Card.Types.Value, int>
                                                                  {
                                                                      { Card.Types.Value.Ace, 11 },
@@ -32,7 +32,7 @@
                                                                  }
                                                          },
                                                          {
-                                                             CardManager.ScoreScale.Trump,
+                                                             ScoreScale.Trump,
                                                              new Dictionary<Card.Types.Value, int>
                                                                  {
                                                                      { Card.Types.Value.Ace, 11 },
@@ -46,7 +46,7 @@
                                                                  }
                                                          },
                                                          {
-                                                             CardManager.ScoreScale.AllTrumps,
+                                                             ScoreScale.AllTrumps,
                                                              new Dictionary<Card.Types.Value, int>
                                                                  {
                                                                      { Card.Types.Value.Ace, 6 },
@@ -60,7 +60,7 @@
                                                                  }
                                                          },
                                                          {
-                                                             CardManager.ScoreScale.NoTrumps,
+                                                             ScoreScale.NoTrumps,
                                                              new Dictionary<Card.Types.Value, int>
                                                                  {
                                                                      { Card.Types.Value.Ace, 19 },
@@ -103,11 +103,11 @@
             }
         }
 
-        public List<Card> Cards { get; private set; }
-
-        public Dictionary<CardManager.ScoreScale, Dictionary<Card.Types.Value, int>> ScoreByValueByScaleDictionary { get; private set; }
-
         public Contract.Types.Type CurrentTrump { get; set; }
+
+        private List<Card> Cards { get; set; }
+
+        private Dictionary<ScoreScale, Dictionary<Card.Types.Value, int>> ScoreByValueByScaleDictionary { get; }
 
         public void Mix()
         {
@@ -120,6 +120,7 @@
                 newCards.Add(this.Cards[randomNum]);
                 this.Cards.RemoveAt(randomNum);
             }
+
             this.Cards = new List<Card>(newCards);
         }
 
@@ -140,6 +141,92 @@
                     }
                 }
             }
+        }
+
+        public int GetCardScore(Card card)
+        {
+            if (this.CurrentTrump == Contract.Types.Type.Undefined)
+            {
+                return -1;
+            }
+
+            ScoreScale trumpType;
+            if (card.Type.ToString() == this.CurrentTrump.ToString())
+            {
+                trumpType = ScoreScale.Trump;
+            }
+            else
+            {
+                switch (this.CurrentTrump)
+                {
+                    case Contract.Types.Type.Diamonds:
+                    case Contract.Types.Type.Hearts:
+                    case Contract.Types.Type.Clubs:
+                    case Contract.Types.Type.Spades:
+                        trumpType = ScoreScale.Standard;
+                        break;
+
+                    case Contract.Types.Type.Aa:
+                        trumpType = ScoreScale.AllTrumps;
+                        break;
+
+                    default:
+                        trumpType = ScoreScale.NoTrumps;
+                        break;
+                }
+            }
+
+            return this.ScoreByValueByScaleDictionary[trumpType][card.Value];
+        }
+
+        public int CompareCards(Card card1, Card card2)
+        {
+            if (card1.Type.ToString() == this.CurrentTrump.ToString()
+                && card2.Type.ToString() != this.CurrentTrump.ToString())
+            {
+                return 1;
+            }
+
+            if (card2.Type.ToString() == this.CurrentTrump.ToString()
+                && card1.Type.ToString() != this.CurrentTrump.ToString())
+            {
+                return -1;
+            }
+
+            return this.GetCardScore(card1) - this.GetCardScore(card2);
+        }
+
+        public Player GetCurrentTurnWinner(IDictionary<Player, Card> cards)
+        {
+            if (!cards.Any())
+            {
+                return null;
+            }
+
+            Player currentWinner = null;
+            foreach (var card in cards)
+            {
+                if (currentWinner == null)
+                {
+                    currentWinner = card.Key;
+                }
+                else if (this.CompareCards(cards[currentWinner], card.Value) < 0)
+                {
+                    currentWinner = card.Key;
+                }
+            }
+
+            return currentWinner;
+        }
+
+        public bool IsTrumpQueen(Card card)
+        {
+            return card.Type.ToString() == this.CurrentTrump.ToString() && card.Value == Card.Types.Value.Queen;
+        }
+
+        public bool IsTrumpKing(Card card)
+        {
+            return card.Type.ToString() == this.CurrentTrump.ToString() && card.Value == Card.Types.Value.King;
         }
     }
 }

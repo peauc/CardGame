@@ -10,7 +10,7 @@
     using DotNetty.Transport.Channels;
     using DotNetty.Transport.Channels.Sockets;
 
-    internal class Server
+    internal class ServerClass
     {
         private static void StartServer()
         {

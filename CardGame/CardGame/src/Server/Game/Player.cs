@@ -18,6 +18,7 @@
             this.Name = name;
             this.Hand = new Hand();
             this.SetupForNewRound();
+            this.Team = null;
         }
 
         public IChannelHandlerContext Ctx { get; }
@@ -29,6 +30,8 @@
         public BeloteState Rebelote { get; set; }
 
         public Hand Hand { get; private set; }
+
+        public Team Team { get; set; }
 
         public void SetupForNewRound()
         {
@@ -65,7 +68,7 @@
         {
             try
             {
-                return this.SendMessage(new Message() { Type = Message.Types.Type.Hand, Hand = this.Hand });
+                return this.SendMessage(new Message { Type = Message.Types.Type.Hand, Hand = this.Hand });
             }
             catch (Exception e)
             {
@@ -79,10 +82,10 @@
             try
             {
                 return this.SendMessage(
-                    new Message()
+                    new Message
                     {
                         Type = Message.Types.Type.Prompt,
-                        Prompt = new Prompt() { ToDisplay = { toPrompt } }
+                        Prompt = new Prompt { ToDisplay = { toPrompt } }
                     });
             }
             catch (Exception e)
@@ -107,6 +110,9 @@
             return this.Hand.Card.Any(card => card.Type.ToString() == trumpType.ToString());
         }
 
-        //// IMPLEMENT HasHigherTrumpCard
+        public bool HasHigherTrumpCard(CardManager cm, Card other)
+        {
+            return this.Hand.Card.Any(card => cm.CurrentTrump.ToString() == card.Type.ToString() && cm.CompareCards(card, other) > 0);
+        }
     }
 }
