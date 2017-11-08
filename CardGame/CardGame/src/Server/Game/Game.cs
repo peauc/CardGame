@@ -1,5 +1,4 @@
-﻿using System;
-namespace CardGame.src.Server
+﻿namespace CardGame.Server.Game
 {
     public class Game
     {

@@ -10,12 +10,14 @@
     using DotNetty.Transport.Channels;
     using DotNetty.Transport.Channels.Sockets;
 
-    class Server
+    internal class Server
     {
-        static void StartServer() {
+        private static void StartServer()
+        {
             Console.WriteLine("StartServer");
             var EventLoopGroup = new MultithreadEventLoopGroup(1);
-            try {
+            try
+            {
                 ServerBootstrap b = new ServerBootstrap();
                 b.Group(EventLoopGroup)
                  .Channel<TcpServerSocketChannel>()
@@ -24,12 +26,15 @@
                  .ChildHandler(new CardGame.src.Server.ServerInitializer());
                 var Channel = b.BindAsync(4242);
                 Console.ReadKey();
-            } catch (Exception E) {
+            }
+            catch (Exception E)
+            {
                 Console.WriteLine(E.Message);
             }
         }
 
-        static void Main(string[] args) {
+        private static void Main(string[] args)
+        {
             StartServer();
             System.Console.WriteLine("Hello World!");
             System.Console.WriteLine("Hello");

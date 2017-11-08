@@ -6,12 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.4.1" />
+    <PackageReference Include="Google.Protobuf.Tools" Version="3.4.0" />
     <PackageReference Include="NuGet.Core" Version="2.14.0" />
     <PackageReference Include="DotNetty.Transport" Version="0.4.7" />
     <PackageReference Include="DotNetty.Handlers" Version="0.4.7" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="src\" />
     <Folder Include="src\Client\" />
     <Folder Include="src\Server\" />
     <Folder Include="src\Server\" />

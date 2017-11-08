@@ -1,0 +1,104 @@
+syntax = "proto3";
+package CardGame.Protocol;
+
+option csharp_namespace = "CardGame.Protocol";
+
+message Message {
+    enum Type {
+        UNDEFINED = 0;
+        HAND = 1;
+        EVENT = 2;
+        PROMPT = 3;
+        REPLY = 4;
+    }
+    Type type = 1;
+    Hand hand = 2;
+    Event event = 3;
+    Prompt prompt = 4;
+    Reply reply = 5;
+}
+
+message Card {
+    enum Type {
+        UNDEFINEDT = 0;
+        DIAMONDS = 1;
+        HEARTS = 2;
+        CLUBS = 3;
+        SPADES = 4;
+    }
+    enum Value {
+        UNDEFINEDV = 0;
+        ACE = 1;
+        KING = 2;
+        QUEEN = 3;
+        JACK = 4;
+        TEN = 5;
+        NINE = 6;
+        EIGHT = 7;
+        SEVEN = 8;
+    }
+    Type type = 1;
+    Value value = 2;
+}
+
+message Announce {
+    enum Type {
+        UNDEFINED = 0;
+        CARRE = 1;
+        CENT = 2;
+        CINQUANTE = 3;
+        TIERCE = 4;
+    }
+    Type type = 1;
+    Card card = 2;
+}
+
+message Hand {
+    repeated Card card = 1;
+}
+
+message Contract {
+    enum Type {
+        UNDEFINED = 0;
+        DIAMONDS = 1;
+        HEARTS = 2;
+        CLUBS = 3;
+        SPADES = 4;
+        AA = 5;
+        NA = 6;
+    }
+    uint32 score = 1;
+    Type type = 2;
+}
+
+message Event {
+    enum Type {
+        UNDEFINED = 0;
+        NAME = 1;
+        HAND = 2;
+        QUIT = 3;
+        CONTRACT = 4;
+        PASS = 5;
+        COINCHE = 6;
+        SURCOINCHE = 7;
+        PLAY = 8;
+        LAST = 9;
+        ANNOUNCE = 10;
+        BELOTE = 11;
+        REBELOTE = 12;
+    }
+    Type type = 1;
+    Card card = 2;
+    Contract contract = 3;
+    Announce announce = 4;
+    repeated string argument = 5;
+}
+
+message Prompt {
+    repeated string to_display = 1;
+}
+
+message Reply {
+    uint32 number = 1;
+    string message = 2;
+}
