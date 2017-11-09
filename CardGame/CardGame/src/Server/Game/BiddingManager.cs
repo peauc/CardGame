@@ -6,11 +6,9 @@
 
     public class BiddingManager : IPhaseManager
     {
-        public BiddingManager(Team team1, Team team2)
+        public BiddingManager(Team[] teams)
         {
-            this.Teams = new Team[2];
-            this.Teams[0] = team1;
-            this.Teams[1] = team2;
+            this.Teams = teams;
             this.TurnsPassed = 0;
             this.HasEnded = false;
             this.IsContractSetup = false;

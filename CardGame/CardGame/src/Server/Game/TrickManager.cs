@@ -7,11 +7,9 @@
 
     public class TrickManager : IPhaseManager
     {
-        public TrickManager(Team team1, Team team2, CardManager cardManager, int round)
+        public TrickManager(Team[] teams, CardManager cardManager, int round)
         {
-            this.Teams = new Team[2];
-            this.Teams[0] = team1;
-            this.Teams[1] = team2;
+            this.Teams = teams;
             this.Round = round;
             this.CardManager = cardManager;
             this.HasEnded = false;
