@@ -9,7 +9,6 @@ namespace Client
         {
             Connection connection = new Connection();
             connection.Connect().Wait();
-            Console.WriteLine("Connected and bye");
             for (;;)
             {
                 Parsing.Parser Parser = new Parsing.Parser(connection.Channel);

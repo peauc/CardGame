@@ -23,9 +23,16 @@ namespace Client
             return (str.Split(" ").Length == i);
         }
 
-        internal static string HandToString(Hand hand)
+        public static string HandToString(Hand hand)
         {
-            throw new NotImplementedException();
+            int i = 0;
+            String ret = "";
+
+            foreach (Card c in hand.Card)
+            {
+                ret += "[SERVER] " + i++ + " : " + c.Value.ToString() + " of " + c.Type.ToString() + "\n";
+            }
+            return (ret);
         }
     }
 }
