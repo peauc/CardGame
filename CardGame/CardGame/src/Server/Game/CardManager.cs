@@ -75,14 +75,14 @@
                                                          }
                                                      };
 
-            var types = new List<Card.Types.Type>
+            List<Card.Types.Type> types = new List<Card.Types.Type>
             {
                 Card.Types.Type.Diamonds,
                 Card.Types.Type.Hearts,
                 Card.Types.Type.Clubs,
                 Card.Types.Type.Spades
             };
-            var values = new List<Card.Types.Value>
+            List<Card.Types.Value> values = new List<Card.Types.Value>
             {
                 Card.Types.Value.Ace,
                 Card.Types.Value.King,
@@ -94,9 +94,9 @@
                 Card.Types.Value.Seven
             };
 
-            foreach (var type in types)
+            foreach (Card.Types.Type type in types)
             {
-                foreach (var value in values)
+                foreach (Card.Types.Value value in values)
                 {
                     this.Cards.Add(new Card { Type = type, Value = value });
                 }
@@ -111,12 +111,12 @@
 
         public void Mix()
         {
-            var newCards = new List<Card>();
-            var rnd = new Random();
+            List<Card> newCards = new List<Card>();
+            Random rnd = new Random();
 
             while (this.Cards.Any())
             {
-                var randomNum = rnd.Next(0, this.Cards.Count);
+                int randomNum = rnd.Next(0, this.Cards.Count);
                 newCards.Add(this.Cards[randomNum]);
                 this.Cards.RemoveAt(randomNum);
             }
@@ -126,15 +126,15 @@
 
         public void DistributeToAll(List<Player> players)
         {
-            var numberCardsToDistribute = new List<int> { 3, 2, 3 };
-            var cardsToDistribute = new List<Card>();
+            List<int> numberCardsToDistribute = new List<int> { 3, 2, 3 };
+            List<Card> cardsToDistribute = new List<Card>();
 
             cardsToDistribute.AddRange(this.Cards);
-            for (var n = 0; n < 3; n++)
+            for (int n = 0; n < 3; n++)
             {
-                foreach (var player in players)
+                foreach (Player player in players)
                 {
-                    for (var j = 0; j < numberCardsToDistribute[n]; j++)
+                    for (int j = 0; j < numberCardsToDistribute[n]; j++)
                     {
                         player.Hand.Card.Add(cardsToDistribute[0]);
                         cardsToDistribute.RemoveAt(0);
@@ -204,7 +204,7 @@
             }
 
             Player currentWinner = null;
-            foreach (var card in cards)
+            foreach (KeyValuePair<Player, Card> card in cards)
             {
                 if (currentWinner == null)
                 {

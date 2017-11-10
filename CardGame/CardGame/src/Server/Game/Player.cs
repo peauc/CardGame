@@ -1,6 +1,7 @@
 ﻿namespace CardGame.Server.Game
 {
     using System;
+
     using System.Linq;
 
     using CardGame.Protocol;
@@ -17,13 +18,13 @@
             this.Ctx = ctx;
             this.Name = name;
             this.Hand = new Hand();
-            this.SetupForNewRound();
             this.Team = null;
+            this.SetupForNewRound();
         }
 
         public IChannelHandlerContext Ctx { get; }
 
-        public string Name { get; }
+        public string Name { get; set; }
 
         public BeloteState Belote { get; set; }
 
@@ -86,6 +87,60 @@
                     {
                         Type = Message.Types.Type.Prompt,
                         Prompt = new Prompt { ToDisplay = { toPrompt } }
+                    });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
+
+        public bool Prompt(Prompt prompt)
+        {
+            try
+            {
+                return this.SendMessage(
+                    new Message
+                    {
+                        Type = Message.Types.Type.Prompt,
+                        Prompt = prompt
+                    });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
+
+        public bool Reply(uint number, string message)
+        {
+            try
+            {
+                return this.SendMessage(
+                    new Message
+                    {
+                        Type = Message.Types.Type.Reply,
+                        Reply = new Reply { Number = number, Message = message }
+                    });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
+
+        public bool Reply(Reply reply)
+        {
+            try
+            {
+                return this.SendMessage(
+                    new Message
+                    {
+                        Type = Message.Types.Type.Reply,
+                        Reply = reply
                     });
             }
             catch (Exception e)
