@@ -1,4 +1,4 @@
-﻿namespace CardGame.Server.Game
+﻿namespace Server.Game
 {
     using System;
     using System.Collections.Generic;
@@ -68,7 +68,8 @@
                     cardToValidate.Validated = true;
                     return true;
                 }
-                else if (this.Type.OrderMatters())
+
+                if (this.Type.OrderMatters())
                 {
                     return false;
                 }
@@ -88,10 +89,8 @@
             {
                 return (int)other.Type - (int)this.Type;
             }
-            else
-            {
-                return this.CardsToValidate[0].CompareTo(other.CardsToValidate[0]);
-            }
+
+            return this.CardsToValidate[0].CompareTo(other.CardsToValidate[0]);
         }
 
         public class AnnounceCard

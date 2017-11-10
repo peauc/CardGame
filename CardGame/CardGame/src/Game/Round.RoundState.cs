@@ -1,4 +1,4 @@
-﻿namespace CardGame.Server.Game
+﻿namespace Server.Game
 {
     public partial class Round
     {

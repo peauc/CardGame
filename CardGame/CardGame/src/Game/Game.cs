@@ -1,5 +1,6 @@
-﻿namespace CardGame.Server.Game
+﻿namespace Server.Game
 {
+    using CardGame.Protocol;
 
     /// <summary>
     /// The game.

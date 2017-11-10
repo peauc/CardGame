@@ -1,7 +1,6 @@
-﻿namespace CardGame.Server.Game
+﻿namespace Server.Game
 {
     using System;
-
     using System.Linq;
 
     using CardGame.Protocol;

@@ -1,4 +1,4 @@
-﻿namespace CardGame.Server.Game
+﻿namespace Server.Game
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -185,19 +185,19 @@
 
                 switch (message.Announce.Type)
                 {
-                    case Protocol.Announce.Types.Type.Carre:
+                    case CardGame.Protocol.Announce.Types.Type.Carre:
                         announce = new Announce(player, AnnounceType.Carre, message.Announce.Card);
                         break;
 
-                    case Protocol.Announce.Types.Type.Cent:
+                    case CardGame.Protocol.Announce.Types.Type.Cent:
                         announce = new Announce(player, AnnounceType.Cent, message.Announce.Card);
                         break;
 
-                    case Protocol.Announce.Types.Type.Cinquante:
+                    case CardGame.Protocol.Announce.Types.Type.Cinquante:
                         announce = new Announce(player, AnnounceType.Cinquante, message.Announce.Card);
                         break;
 
-                    case Protocol.Announce.Types.Type.Tierce:
+                    case CardGame.Protocol.Announce.Types.Type.Tierce:
                         announce = new Announce(player, AnnounceType.Tierce, message.Announce.Card);
                         break;
 
