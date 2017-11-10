@@ -5,15 +5,23 @@ namespace Client
 {
     class Program
     {
-        static void Main(string[] args)
+        static public void Main(string[] args)
         {
+            
             Connection connection = new Connection();
-            connection.Connect().Wait();
+            try
+            {
+                connection.Connect().Wait();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            Parsing.Parser Prs = new Parsing.Parser(connection.Channel);
             for (;;)
             {
-                Parsing.Parser Parser = new Parsing.Parser(connection.Channel);
-                while(Parser.ShouldParse()) 
-                    Parser.Parse();
+                while(Prs.ShouldParse()) 
+                    Prs.Parse();
                 CardGame.Protocol.Message m = null;
                 while ((m = Networking.BufferedPackets.GetMessage()) != null)
                 {

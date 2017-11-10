@@ -16,6 +16,7 @@ namespace Client.Networking
         public override void ChannelActive(IChannelHandlerContext context)
         {
             base.ChannelActive(context);
+            Console.WriteLine("New channel activated");
         }
         protected override void InitChannel(TcpSocketChannel channel)
         {

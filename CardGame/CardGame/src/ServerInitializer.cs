@@ -15,8 +15,8 @@ namespace CardGame.src.Server
 
         public override void ChannelActive(IChannelHandlerContext context)
         {
-            base.ChannelActive(context);
             Console.WriteLine("ChannelActive");
+            base.ChannelActive(context);
             Message m = new Message()
             {
                 Type = Message.Types.Type.Prompt,
@@ -27,6 +27,7 @@ namespace CardGame.src.Server
             };
             context.WriteAndFlushAsync(m);
         }
+
         protected override void InitChannel(TcpSocketChannel channel)
         {
             IChannelPipeline pipe = channel.Pipeline;
@@ -36,6 +37,7 @@ namespace CardGame.src.Server
             pipe.AddLast(new ProtobufVarint32LengthFieldPrepender());
             pipe.AddLast(new ProtobufEncoder());
             pipe.AddLast(new PlayerHandler());
+        Console.WriteLine("Init channel");
         }
     }
 }

@@ -24,8 +24,9 @@
                  .Option(ChannelOption.SoBacklog, 100)
                  .Handler(new LoggingHandler("LSTN"))
                  .ChildHandler(new CardGame.src.Server.ServerInitializer());
-                var Channel = b.BindAsync(4242);
+                b.BindAsync(8090).Wait();
                 Console.ReadKey();
+                while (true) ;
             }
             catch (Exception E)
             {

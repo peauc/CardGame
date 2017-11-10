@@ -19,6 +19,7 @@ namespace Client.Parsing
 
         public Parser(IChannel channel)
         {
+            Console.WriteLine("Constructor");
             _channel = channel;
             _map.Add("NAME", 0);
             _map.Add("HAND", 1);
