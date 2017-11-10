@@ -19,7 +19,7 @@ namespace Client.Networking
         public Connection() 
         {
             Console.WriteLine("Creating new connection");
-            Port = 4242;
+            Port = 8090;
             Hostname = "localhost";
         }
 
@@ -31,7 +31,23 @@ namespace Client.Networking
                 .Group(_EventLoopGroup)
                 .Channel<TcpSocketChannel>()
                 .Handler(new ClientInitializer());
-            Channel = await _Bootstrap.ConnectAsync(Hostname, Port);
+            try
+            {
+                Console.WriteLine("Please input hostname, enter set default value");
+                string tmp = Console.In.ReadLine();
+                if (tmp.Trim().Length != 0)
+                    Hostname = tmp;
+                tmp = Console.In.ReadLine();
+                Console.WriteLine("Please input port, enter set default value");
+                if (tmp.Trim().Length != 0 && int.TryParse(tmp, out int tmp2))
+                    Port = tmp2;
+                Channel = await _Bootstrap.ConnectAsync(Hostname, Port);
+            }
+            catch 
+            {
+                Console.WriteLine("Cannot connect, please retry");
+                throw;
+            }
 
         }
     }

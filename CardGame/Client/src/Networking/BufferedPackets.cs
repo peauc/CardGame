@@ -6,7 +6,7 @@ namespace Client.Networking
 {
     public class BufferedPackets
     {
-        static List<Message> List;
+        static private readonly List<Message> List = new List<Message>();
 
         public BufferedPackets()
         {

@@ -1,9 +1,9 @@
 ﻿using System;
 using DotNetty.Codecs.Protobuf;
-using DotNetty.Handlers.Logging;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
 using CardGame.Protocol;
+
 namespace Client.Networking
 {
     public class ClientInitializer : ChannelInitializer<TcpSocketChannel>
@@ -16,8 +16,8 @@ namespace Client.Networking
         public override void ChannelActive(IChannelHandlerContext context)
         {
             base.ChannelActive(context);
+            Console.WriteLine("New channel activated");
         }
-
         protected override void InitChannel(TcpSocketChannel channel)
         {
             IChannelPipeline pipe = channel.Pipeline;
