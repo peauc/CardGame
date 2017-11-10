@@ -13,6 +13,7 @@
             this.Player = player;
             this.Type = type;
             this.Reward = this.Type.Score();
+            this.CardsToValidate = new List<AnnounceCard>();
 
             if (this.Type == AnnounceType.Carre)
             {
