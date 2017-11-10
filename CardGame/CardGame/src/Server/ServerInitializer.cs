@@ -1,7 +1,8 @@
 ﻿using System;
 using DotNetty.Transport.Channels.Sockets;
 using DotNetty.Transport.Channels;
-using DotNetty.Codecs;
+using DotNetty.Codecs.Protobuf;
+using CardGame.Protocol;
 
 namespace CardGame.src.Server
 {
@@ -16,15 +17,25 @@ namespace CardGame.src.Server
         {
             base.ChannelActive(context);
             Console.WriteLine("ChannelActive");
+            Message m = new Message()
+            {
+                Type = Message.Types.Type.Prompt,
+                Prompt = new Prompt()
+                {
+                    ToDisplay = { "Hello new little packet" },
+                }
+            };
+            context.WriteAndFlushAsync(m);
         }
         protected override void InitChannel(TcpSocketChannel channel)
         {
-            IChannelPipeline c = channel.Pipeline;
+            IChannelPipeline pipe = channel.Pipeline;
 
-            c.AddLast(new LineBasedFrameDecoder(1024));
-            c.AddLast(new StringDecoder());
-            c.AddLast(new StringEncoder());
-            c.AddLast(new PlayerHandler());
+            pipe.AddLast(new ProtobufVarint32FrameDecoder());
+            pipe.AddLast(new ProtobufDecoder(Message.Parser));
+            pipe.AddLast(new ProtobufVarint32LengthFieldPrepender());
+            pipe.AddLast(new ProtobufEncoder());
+            pipe.AddLast(new PlayerHandler());
         }
     }
 }
