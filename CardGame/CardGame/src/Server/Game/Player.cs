@@ -1,6 +1,7 @@
 ﻿namespace CardGame.Server.Game
 {
     using System;
+
     using System.Linq;
 
     using CardGame.Protocol;
@@ -17,8 +18,8 @@
             this.Ctx = ctx;
             this.Name = name;
             this.Hand = new Hand();
-            this.SetupForNewRound();
             this.Team = null;
+            this.SetupForNewRound();
         }
 
         public IChannelHandlerContext Ctx { get; }

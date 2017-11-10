@@ -39,9 +39,13 @@
 
                 return;
             }
-            if (this.State == GameState.AwaitingPlayers)
+
+            if (this.State != GameState.Game)
             {
                 player.Reply(402, "The game is not ready.");
+            }
+            else if (HandleCommonCommands(message, player))
+            {
             }
             else
             {
@@ -58,24 +62,42 @@
                         {
                             this.CurrentPlayerIndex = 0;
                         }
+
+                        this.PlayerManager.Players[this.CurrentPlayerIndex]
+                            .Prompt("It's your turn to play, here is your hand:");
+                        this.PlayerManager.Players[this.CurrentPlayerIndex].SendHand();
+                        if (this.CurrentRound.HasEnded)
+                        {
+                            if (this.Teams[0].TotalScore >= 3000 || this.Teams[1].TotalScore >= 3000)
+                            {
+                                this.State = GameState.Scores;
+                                ScoreManager.ShowScores(this.Teams, this.PlayerManager);
+                            }
+                            else
+                            {
+                                this.CurrentRound = new Round(this.Teams, this.CardManager, this.CurrentRoundIndex, this);
+                            }
+                        }
                     }
                 }
             }
         }
 
-        private bool HandleCommonCommands(Message message, Player player)
+        private static bool HandleCommonCommands(Message message, Player player)
         {
             if (message.Type != Message.Types.Type.Event || message.Event == null)
             {
                 player.Reply(402, "Invalid message.");
                 return true;
             }
+
             if (message.Event.Type == Event.Types.Type.Hand)
             {
                 player.Reply(200, "SUCCESS");
                 player.SendHand();
                 return true;
             }
+
             return false;
         }
 

@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.CompilerServices;
 
     using CardGame.Protocol;
 
@@ -14,6 +15,7 @@
             this.Players[1] = player2;
             this.Players[0].Team = this;
             this.Players[1].Team = this;
+            this.TotalScore = 0;
         }
 
         public Player[] Players { get; }
@@ -45,6 +47,8 @@
             this.HasCoinched = hasCoinched;
             this.HasSurcoinched = hasSurcoinched;
             this.Contract = contract;
+            this.RoundScore = 0;
+            this.BonusRoundScore = 0;
             this.Announces = new List<Announce>();
         }
 
@@ -57,6 +61,8 @@
         {
             int ownScore = 0;
             int otherScore = 0;
+
+            this.RoundScore += bonus;
 
             if (this.Announces == null || !this.Announces.Any())
             {
@@ -86,7 +92,7 @@
             }
 
             this.Announces.Clear();
-            this.RoundScore += ownScore + bonus;
+            this.RoundScore += ownScore;
             return otherScore;
         }
 
@@ -99,7 +105,7 @@
                     return this.TricksWon == 8;
                 }
 
-                return this.RoundScore >= this.Contract.Score;
+                return this.RoundScore + this.BonusRoundScore >= this.Contract.Score;
             }
 
             return false;
@@ -109,11 +115,23 @@
         {
             if (this.IsCapot)
             {
-                this.TotalScore += this.RoundScore + 500;
+                this.RoundScore += 500 + this.BonusRoundScore;
             }
             else
             {
-                this.TotalScore += this.RoundScore + this.Contract.Score;
+                this.RoundScore += this.Contract.Score + this.BonusRoundScore;
+            }
+        }
+
+        public void AwardOppositeTeamContract(Team oppositeTeam)
+        {
+            if (oppositeTeam.IsCapot)
+            {
+                this.RoundScore += 500 + oppositeTeam.BonusRoundScore + this.BonusRoundScore;
+            }
+            else
+            {
+                this.RoundScore += oppositeTeam.Contract.Score + oppositeTeam.BonusRoundScore + this.BonusRoundScore;
             }
         }
     }

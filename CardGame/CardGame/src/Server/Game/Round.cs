@@ -17,8 +17,10 @@
             this.RoundNumber = roundNumber;
             this.State = RoundState.Bidding;
             this.Game = game;
+            this.Tricks = new List<TrickManager>();
             this.BiddingManager = new BiddingManager(this.Teams);
             this.PhaseManager = this.BiddingManager;
+            this.Game.PlayerManager.SetupForNewRound();
 
             this.CardManager.Mix();
             this.CardManager.DistributeToAll(this.Game.PlayerManager.Players);
@@ -37,9 +39,7 @@
 
         public Game Game { get; private set; }
 
-        public List<TrickManager> Tricks { get; private set; }
-
-        public TrickManager CurrentTrick { get; private set; }
+        public List<TrickManager> Tricks { get; }
 
         public bool HasEnded { get; private set; }
 
@@ -54,15 +54,35 @@
             this.PhaseManager.HandleTurn(player, message);
             success = this.PhaseManager.Success;
 
+            if (this.PhaseManager.Reply != null)
+            {
+                player.Reply(this.PhaseManager.Reply);
+            }
+
+            if (this.PhaseManager.ToPrompt != null && this.PhaseManager.ToPrompt.Any())
+            {
+                foreach (KeyValuePair<Team, List<string>> keyValuePair in this.PhaseManager.ToPrompt)
+                {
+                    foreach (string s in keyValuePair.Value)
+                    {
+                        keyValuePair.Key.Players[0].Prompt(s);
+                        keyValuePair.Key.Players[1].Prompt(s);
+                    }
+                }
+            }
+
             if (this.PhaseManager.HasEnded)
             {
                 if (this.State == RoundState.Bidding)
                 {
                     this.State = RoundState.Tricks;
+                    this.Game.PlayerManager.PromptToAll("End of the bidding phase, game phase starting");
                 }
+
                 if (this.Tricks.Count == 8)
                 {
                     this.HasEnded = true;
+                    ScoreManager.CountScores(this.Game.PlayerManager, this.Teams);
                 }
                 else
                 {
@@ -71,6 +91,7 @@
                     this.Game.PlayerManager.PromptToAll($"Trick {this.Tricks.Count}:");
                 }
             }
+
             return success;
         }
     }
