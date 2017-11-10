@@ -30,7 +30,7 @@ namespace Client.Networking
             _Bootstrap
                 .Group(_EventLoopGroup)
                 .Channel<TcpSocketChannel>()
-                .Handler(handler: new ClientInitializer());
+                .Handler(new ClientInitializer());
             Channel = await _Bootstrap.ConnectAsync(Hostname, Port);
 
         }
