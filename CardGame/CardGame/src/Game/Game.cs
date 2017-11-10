@@ -1,7 +1,12 @@
+<<<<<<< HEAD:CardGame/CardGame/src/Server/Game/Game.cs
 ﻿using CardGame.Protocol;
 
 namespace CardGame.Server.Game
+=======
+﻿namespace Server.Game
+>>>>>>> 5c3391c1a58d5184fc21ac4d076938a62b3e80a0:CardGame/CardGame/src/Game/Game.cs
 {
+    using CardGame.Protocol;
 
     /// <summary>
     /// The game.

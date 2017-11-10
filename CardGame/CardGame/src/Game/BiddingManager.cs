@@ -1,4 +1,4 @@
-﻿namespace CardGame.Server.Game
+﻿namespace Server.Game
 {
     using System.Collections.Generic;
 
@@ -99,7 +99,7 @@
                         this.TrumpType = player.Team.Contract.Type;
                         str = $"must fulfill this contract. (" + $"score: {player.Team.Contract.Score}, "
                               + $"trump: {player.Team.Contract.Type.ToString()}, "
-                              + $"options:{((player.Team.IsCapot) ? " CAPOT" : string.Empty)}{((player.Team.OppositeTeam.HasCoinched) ? " COINCHE" : string.Empty)}{((player.Team.HasSurcoinched) ? " SURCOINCHE" : string.Empty)})";
+                              + $"options:{(player.Team.IsCapot ? " CAPOT" : string.Empty)}{(player.Team.OppositeTeam.HasCoinched ? " COINCHE" : string.Empty)}{(player.Team.HasSurcoinched ? " SURCOINCHE" : string.Empty)})";
                         this.ToPrompt[player.Team].Add($"Your team {str}");
                         this.ToPrompt[player.Team.OppositeTeam].Add($"The opposite team {str}");
                     }
@@ -108,7 +108,7 @@
                         this.TrumpType = player.Team.OppositeTeam.Contract.Type;
                         str = $"must fulfill this contract. (" + $"score: {player.Team.OppositeTeam.Contract.Score}, "
                               + $"trump: {player.Team.OppositeTeam.Contract.Type.ToString()}, "
-                              + $"options:{((player.Team.OppositeTeam.IsCapot) ? " CAPOT" : string.Empty)}{((player.Team.HasCoinched) ? " COINCHE" : string.Empty)}{((player.Team.OppositeTeam.HasSurcoinched) ? " SURCOINCHE" : string.Empty)})";
+                              + $"options:{(player.Team.OppositeTeam.IsCapot ? " CAPOT" : string.Empty)}{(player.Team.HasCoinched ? " COINCHE" : string.Empty)}{(player.Team.OppositeTeam.HasSurcoinched ? " SURCOINCHE" : string.Empty)})";
                         this.ToPrompt[player.Team].Add($"The opposite team {str}");
                         this.ToPrompt[player.Team.OppositeTeam].Add($"Your team {str}");
                     }
