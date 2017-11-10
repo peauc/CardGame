@@ -114,6 +114,7 @@
             this.CreateTeams();
             this.CurrentRound = new Round(this.Teams, this.CardManager, 0, this);
             this.CurrentRoundIndex = 1;
+            this.PlayerManager.SetupForNewRound();
         }
 
         private void CreateTeams()
