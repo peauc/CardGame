@@ -1,7 +1,9 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardGame", "CardGame\CardGame.csproj", "{F6146DB6-7545-4431-A199-C7F88A38986E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "CardGame\Server.csproj", "{F6146DB6-7545-4431-A199-C7F88A38986E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{9DD2DFBD-2AAA-4ECA-B6A6-FF80DA9BF446}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,5 +15,9 @@ Global
 		{F6146DB6-7545-4431-A199-C7F88A38986E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6146DB6-7545-4431-A199-C7F88A38986E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6146DB6-7545-4431-A199-C7F88A38986E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DD2DFBD-2AAA-4ECA-B6A6-FF80DA9BF446}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DD2DFBD-2AAA-4ECA-B6A6-FF80DA9BF446}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DD2DFBD-2AAA-4ECA-B6A6-FF80DA9BF446}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DD2DFBD-2AAA-4ECA-B6A6-FF80DA9BF446}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

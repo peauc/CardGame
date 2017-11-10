@@ -1,0 +1,11 @@
+/Users/peau_c/Repositories/School/DNet/DOT_cardGames_2017/CardGame/Client/bin/Debug/netcoreapp2.0/Client.deps.json
+/Users/peau_c/Repositories/School/DNet/DOT_cardGames_2017/CardGame/Client/bin/Debug/netcoreapp2.0/Client.runtimeconfig.json
+/Users/peau_c/Repositories/School/DNet/DOT_cardGames_2017/CardGame/Client/bin/Debug/netcoreapp2.0/Client.runtimeconfig.dev.json
+/Users/peau_c/Repositories/School/DNet/DOT_cardGames_2017/CardGame/Client/bin/Debug/netcoreapp2.0/Client.dll
+/Users/peau_c/Repositories/School/DNet/DOT_cardGames_2017/CardGame/Client/bin/Debug/netcoreapp2.0/Client.pdb
+/Users/peau_c/Repositories/School/DNet/DOT_cardGames_2017/CardGame/Client/obj/Debug/netcoreapp2.0/Client.csprojResolveAssemblyReference.cache
+/Users/peau_c/Repositories/School/DNet/DOT_cardGames_2017/CardGame/Client/obj/Debug/netcoreapp2.0/Client.csproj.CoreCompileInputs.cache
+/Users/peau_c/Repositories/School/DNet/DOT_cardGames_2017/CardGame/Client/obj/Debug/netcoreapp2.0/Client.AssemblyInfoInputs.cache
+/Users/peau_c/Repositories/School/DNet/DOT_cardGames_2017/CardGame/Client/obj/Debug/netcoreapp2.0/Client.AssemblyInfo.cs
+/Users/peau_c/Repositories/School/DNet/DOT_cardGames_2017/CardGame/Client/obj/Debug/netcoreapp2.0/Client.dll
+/Users/peau_c/Repositories/School/DNet/DOT_cardGames_2017/CardGame/Client/obj/Debug/netcoreapp2.0/Client.pdb
