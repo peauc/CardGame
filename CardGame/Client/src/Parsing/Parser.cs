@@ -60,7 +60,7 @@ namespace Client.Parsing
 
         public Boolean ShouldParse()
         {
-            return (_shouldQuit);
+            return (!_shouldQuit);
         }
 
         private void Read()

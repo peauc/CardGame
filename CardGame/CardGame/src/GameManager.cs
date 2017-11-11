@@ -17,6 +17,7 @@ namespace Server
         {
             foreach (Game.Game g in GameList)
             {
+                Console.WriteLine(g.PlayerManager.Players.Count);
                 if (g.PlayerManager.Players.Count != 4)
                     return (g);
             }
