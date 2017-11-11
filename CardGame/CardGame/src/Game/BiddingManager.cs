@@ -167,7 +167,7 @@
                     this.ToPrompt[player.Team].Add($"Your team has made a new contract. " +
                                                    $"score: {message.Contract.Score}, " +
                                                    $"type: {message.Contract.Type.ToString()}.");
-                    this.ToPrompt[player.Team].Add($"The opposite team has made a new contract. " +
+                    this.ToPrompt[player.Team.OppositeTeam].Add($"The opposite team has made a new contract. " +
                                                    $"score: {message.Contract.Score}, " +
                                                    $"type: {message.Contract.Type.ToString()}.");
                 }

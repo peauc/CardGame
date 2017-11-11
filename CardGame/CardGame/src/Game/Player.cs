@@ -151,7 +151,7 @@
 
         public bool HasCard(Card card)
         {
-            return this.Hand.Card.Contains(card);
+            return this.Hand?.Card != null && this.Hand.Card.Any() && this.Hand.Card.Any(card1 => card.Value == card1.Value && card.Type == card1.Type);
         }
 
         public bool HasStartCard(Card.Types.Type startCardType)

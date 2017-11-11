@@ -75,6 +75,7 @@
                             }
                             else
                             {
+                                this.CurrentRoundIndex++;
                                 this.CurrentRound = new Round(this.Teams, this.CardManager, this.CurrentRoundIndex, this);
                             }
                         }
