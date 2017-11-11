@@ -21,6 +21,8 @@
             this.BiddingManager = new BiddingManager(this.Teams, this.CardManager);
             this.PhaseManager = this.BiddingManager;
             this.Game.PlayerManager.SetupForNewRound();
+            this.Game.Teams[0].PrepareRound(false, false, false, null);
+            this.Game.Teams[1].PrepareRound(false, false, false, null);
 
             this.CardManager.Mix();
             this.CardManager.DistributeToAll(this.Game.PlayerManager.Players);

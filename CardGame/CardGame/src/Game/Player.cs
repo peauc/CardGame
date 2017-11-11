@@ -151,7 +151,14 @@
 
         public bool HasCard(Card card)
         {
-            return this.Hand?.Card != null && this.Hand.Card.Any() && this.Hand.Card.Any(card1 => card.Value == card1.Value && card.Type == card1.Type);
+            foreach (Card card1 in this.Hand.Card)
+            {
+                if (card.Value == card1.Value && card.Type == card1.Type)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public bool HasStartCard(Card.Types.Type startCardType)

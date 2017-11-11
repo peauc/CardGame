@@ -1,5 +1,6 @@
 ﻿namespace Server.Game
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -175,7 +176,7 @@
             {
                 this.Reply = new Reply { Number = 462, Message = "Invalid ANNOUNCE." };
             }
-            else if (!player.HasCard(message.Card))
+            else if (!player.HasCard(message.Announce.Card))
             {
                 this.Reply = new Reply { Number = 463, Message = "You don't have this card in your hand." };
             }
@@ -205,7 +206,11 @@
                         this.Reply = new Reply { Number = 462, Message = "Invalid ANNOUNCE." };
                         return;
                 }
-
+                Console.WriteLine($"{announce.Type.ToString()} {announce.Reward}");
+                if (player.Team.Announces == null)
+                {
+                    player.Team.Announces = new List<Announce>();
+                }
                 player.Team.Announces.Add(announce);
                 this.ToPrompt[player.Team].Add($"{player.Name} has made an ANNOUNCE of strength {announce.Reward}");
                 this.ToPrompt[player.Team.OppositeTeam].Add($"{player.Name} has made an ANNOUNCE of strength {announce.Reward}");
