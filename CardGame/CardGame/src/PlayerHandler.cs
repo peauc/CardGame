@@ -7,7 +7,7 @@
 
     public class PlayerHandler : SimpleChannelInboundHandler<Message>
     {
-        private static GameManager gm = new GameManager();
+        private static GameManager Gm = new GameManager();
 
         public PlayerHandler()
         {
@@ -18,8 +18,8 @@
         {
             base.ChannelActive(context);
             Game.Player P = new Game.Player(context, "");
-            gm.AddPlayerToGame(P);
-            Console.WriteLine("Client has connecting");
+            Gm.AddPlayerToGame(P);
+            Console.WriteLine("Client has connected");
             Message m = new Message()
             {
                 Type = Message.Types.Type.Prompt,
@@ -42,12 +42,12 @@
             Game.Game G;
             Game.Player P;
 
-            if ((P = gm.FindPlayerByContext(ctx)) == null)
+            if ((P = Gm.FindPlayerByContext(ctx)) == null)
             {
                 Console.WriteLine("Unknown Player");
                 return;
             }
-            if ((G = gm.FindGameByPlayer(P)) == null)
+            if ((G = Gm.FindGameByPlayer(P)) == null)
             {
                 Console.WriteLine("Unknown game");
                 return;

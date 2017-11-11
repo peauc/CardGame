@@ -20,7 +20,7 @@ namespace Client.Networking
         {
             Console.WriteLine("Creating new connection");
             Port = 8090;
-            Hostname = "localhost";
+            Hostname = "127.0.0.1";
         }
 
         public async Task Connect()

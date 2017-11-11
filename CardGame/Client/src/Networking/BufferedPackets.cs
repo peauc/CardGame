@@ -20,7 +20,9 @@ namespace Client.Networking
         public static Message GetMessage()
         {
             if (List.Count == 0)
+            {
                 return (null);
+            }
             try
             {
                 Message m = List[0];

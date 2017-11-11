@@ -17,18 +17,33 @@ namespace Client.Networking
             Message m = new Message
             {
                 Type = Message.Types.Type.Prompt,
-                Prompt = new Prompt() {
-                    ToDisplay = {"Hello Server"}
+                Prompt = new Prompt()
+                {
+                    ToDisplay = { "Hello Server" }
                 }
-         };
+            };
             context.WriteAndFlushAsync(m);
         }
 
-        protected override void ChannelRead0(IChannelHandlerContext ctx, Message msg)
+        protected override void ChannelRead0(IChannelHandlerContext ctx, Message m)
         {
-            Console.WriteLine(msg.ToString());
-
-            BufferedPackets.AddMessage(msg);
+            if (m.Type == CardGame.Protocol.Message.Types.Type.Reply)
+            {
+                String messages = m.Reply.Message;
+                Console.WriteLine("[SERVER] " + messages);
+            }
+            if (m.Type == CardGame.Protocol.Message.Types.Type.Prompt)
+            {
+                var messages = m.Prompt.ToDisplay;
+                foreach (String s in messages)
+                {
+                    Console.WriteLine("[SERVER] " + s);
+                }
+            }
+            if (m.Type == CardGame.Protocol.Message.Types.Type.Hand)
+            {
+                String hand = Utils.HandToString(m.Hand);
+            }
         }
     }
 }
