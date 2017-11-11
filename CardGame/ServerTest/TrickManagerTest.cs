@@ -9,16 +9,19 @@
 
     using Server.Game;
 
+    using Announce = CardGame.Protocol.Announce;
+
     [TestClass]
     public class TrickManagerTest
     {
         private readonly CardManager cardManager;
 
-        private List<Player> players;
+        private readonly List<Player> players;
 
-        private Team[] teams;
+        private readonly Team[] teams;
 
-        private BiddingManager biddingManager;
+        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
+        private readonly BiddingManager biddingManager;
 
         public TrickManagerTest()
         {
@@ -130,31 +133,111 @@
             Assert.AreEqual(10, this.teams[1].RoundScore);
         }
 
-        //[TestMethod]
-        //public void TrickManagerValidRebelote()
-        //{
-        //    this.cardManager.Mix(77);
-        //    this.cardManager.DistributeToAll(this.players);
+        [TestMethod]
+        public void TrickManagerValidBelote()
+        {
+            this.cardManager.Mix(78);
+            this.cardManager.DistributeToAll(this.players);
+            this.cardManager.CurrentTrump = Contract.Types.Type.Spades;
 
-        //    foreach (Player player in this.players)
-        //    {
-        //        Console.WriteLine($"\r\n{player.Name}");
-        //        foreach (Card card in player.Hand.Card)
-        //        {
-        //            Console.WriteLine($"{card.Value} of {card.Type}");
-        //        }
-        //    }
+            foreach (Player player in this.players)
+            {
+                Console.WriteLine($"\r\n{player.Name}");
+                foreach (Card card in player.Hand.Card)
+                {
+                    Console.WriteLine($"{card.Value} of {card.Type}");
+                }
+            }
 
-        //    TrickManager trickManager = new TrickManager(this.teams, this.cardManager, 0);
+            this.players[2].Belote = Player.BeloteState.Done;
 
-        //    trickManager.HandleTurn(this.players[0], new Event { Type = Event.Types.Type.Play, Card = new Card { Type = Card.Types.Type.Clubs, Value = Card.Types.Value.King } });
-        //    Assert.IsTrue(trickManager.Success);
+            TrickManager trickManager = new TrickManager(this.teams, this.cardManager, 0);
 
-        //    trickManager.HandleTurn(this.players[1], new Event { Type = Event.Types.Type.Play, Card = new Card { Type = Card.Types.Type.Clubs, Value = Card.Types.Value.Seven } });
-        //    Assert.IsTrue(trickManager.Success);
+            trickManager.HandleTurn(this.players[0], new Event { Type = Event.Types.Type.Play, Card = new Card { Type = Card.Types.Type.Clubs, Value = Card.Types.Value.Nine } });
+            Assert.IsTrue(trickManager.Success);
 
-        //    Assert.Fail();
-        //}
+            trickManager.HandleTurn(this.players[1], new Event { Type = Event.Types.Type.Belote });
+
+            trickManager.HandleTurn(this.players[1], new Event { Type = Event.Types.Type.Play, Card = new Card { Type = Card.Types.Type.Spades, Value = Card.Types.Value.Queen } });
+            Assert.IsTrue(trickManager.Success);
+
+            Assert.IsTrue(this.players[2].Belote == Player.BeloteState.Done);
+        }
+
+        [TestMethod]
+        public void TrickManagerValidRebelote()
+        {
+            this.cardManager.Mix(77);
+            this.cardManager.DistributeToAll(this.players);
+            this.cardManager.CurrentTrump = Contract.Types.Type.Hearts;
+
+            foreach (Player player in this.players)
+            {
+                Console.WriteLine($"\r\n{player.Name}");
+                foreach (Card card in player.Hand.Card)
+                {
+                    Console.WriteLine($"{card.Value} of {card.Type}");
+                }
+            }
+
+            this.players[2].Belote = Player.BeloteState.Done;
+
+            TrickManager trickManager = new TrickManager(this.teams, this.cardManager, 0);
+
+            trickManager.HandleTurn(this.players[0], new Event { Type = Event.Types.Type.Play, Card = new Card { Type = Card.Types.Type.Clubs, Value = Card.Types.Value.Eight } });
+            Assert.IsTrue(trickManager.Success);
+
+            trickManager.HandleTurn(this.players[1], new Event { Type = Event.Types.Type.Play, Card = new Card { Type = Card.Types.Type.Clubs, Value = Card.Types.Value.Jack } });
+            Assert.IsTrue(trickManager.Success);
+
+            trickManager.HandleTurn(this.players[2], new Event { Type = Event.Types.Type.Rebelote });
+
+            trickManager.HandleTurn(this.players[2], new Event { Type = Event.Types.Type.Play, Card = new Card { Type = Card.Types.Type.Hearts, Value = Card.Types.Value.King } });
+            Assert.IsTrue(trickManager.Success);
+
+            Assert.IsTrue(this.players[2].Rebelote == Player.BeloteState.Done);
+            Assert.AreEqual(20, this.teams[0].BonusRoundScore);
+        }
+
+        [TestMethod]
+        public void TrickManagerValidAnnounce()
+        {
+        }
+
+        [TestMethod]
+        public void TrickManagerInvalidAnnounceNotFirstTrick()
+        {
+            this.cardManager.Mix(74);
+            this.cardManager.DistributeToAll(this.players);
+
+            foreach (Player player in this.players)
+            {
+                Console.WriteLine($"\r\n{player.Name}");
+                foreach (Card card in player.Hand.Card)
+                {
+                    Console.WriteLine($"{card.Value} of {card.Type}");
+                }
+            }
+
+            TrickManager trickManager = new TrickManager(this.teams, this.cardManager, 1);
+
+            trickManager.HandleTurn(
+                this.players[0],
+                new Event
+                {
+                    Type = Event.Types.Type.Announce,
+                    Announce = new Announce
+                    {
+                        Type = Announce.Types.Type.Carre,
+                        Card = new Card
+                        {
+                            Type = Card.Types.Type.Diamonds,
+                            Value = Card.Types.Value.Jack
+                        }
+                    }
+                });
+            Assert.IsTrue(trickManager.Success);
+        }
 
         [TestMethod]
         public void TrickManagerInvalidCardNotStartType()

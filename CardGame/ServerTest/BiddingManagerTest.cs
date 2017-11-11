@@ -14,11 +14,9 @@
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly CardManager cardManager;
 
-        // ReSharper disable once FieldCanBeMadeReadOnly.Local
-        private List<Player> players;
+        private readonly List<Player> players;
 
-        // ReSharper disable once FieldCanBeMadeReadOnly.Local
-        private Team[] teams;
+        private readonly Team[] teams;
 
         public BiddingManagerTest()
         {

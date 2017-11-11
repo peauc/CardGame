@@ -295,10 +295,13 @@
             this.ToPrompt[player.Team.OppositeTeam].Add($"{player.Name} has just played a {message.Card.Value.ToString()} of {message.Card.Type.ToString()}.");
             this.Success = true;
             player.RemoveFromHand(message.Card);
-            if (player.Team.Announces != null && player.Team.Announces.Any())
+            if (this.Turn != 0)
             {
-                if (player.Team.Announces.Any(announce => announce.Validate(message.Card)))
+                if (player.Team.Announces != null && player.Team.Announces.Any())
                 {
+                    if (player.Team.Announces.Any(announce => announce.Validate(message.Card)))
+                    {
+                    }
                 }
             }
         }

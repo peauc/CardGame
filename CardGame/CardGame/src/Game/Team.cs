@@ -56,6 +56,24 @@
             return this.Players.Any(teamPlayer => teamPlayer.Name == player.Name);
         }
 
+        public Announce GetBestAnnounce()
+        {
+            if (this.Announces == null || !this.Announces.Any())
+            {
+                return null;
+            }
+
+            Announce best = this.Announces[0];
+            foreach (Announce announce in this.Announces)
+            {
+                if (best.CompareTo(announce) > 0)
+                {
+                    best = announce;
+                }
+            }
+            return best;
+        }
+
         public int ValidateAnnounces(int bonus, List<Player> players)
         {
             int ownScore = 0;

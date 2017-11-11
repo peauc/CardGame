@@ -86,6 +86,10 @@
                 }
                 else
                 {
+                    if (this.Tricks.Count == 0)
+                    {
+                        this.SetupAnnounces();
+                    }
                     this.Tricks.Add(new TrickManager(this.Teams, this.CardManager, this.Tricks.Count));
                     this.PhaseManager = this.Tricks.Last();
                     this.Game.PlayerManager.PromptToAll($"Trick {this.Tricks.Count}:");
@@ -93,6 +97,32 @@
             }
 
             return success;
+        }
+
+        private void SetupAnnounces()
+        {
+            Announce teamOneBestAnnounce = this.Teams[0].GetBestAnnounce();
+            Announce teamTwoBestAnnounce = this.Teams[1].GetBestAnnounce();
+            Team loser = null;
+
+            if (teamOneBestAnnounce == null && teamTwoBestAnnounce != null)
+            {
+                loser = this.Teams[0];
+            }
+            else if (teamOneBestAnnounce != null && teamTwoBestAnnounce == null)
+            {
+                loser = this.Teams[1];
+            }
+            else if (teamOneBestAnnounce != null)
+            {
+                loser = teamOneBestAnnounce.CompareTo(teamTwoBestAnnounce) > 0 ? this.Teams[0] : this.Teams[1];
+            }
+
+            if (loser != null)
+            {
+                //// PROMPT
+                loser.Announces.Clear();
+            }
         }
     }
 }
