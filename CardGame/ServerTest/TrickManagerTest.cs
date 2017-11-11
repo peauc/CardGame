@@ -48,7 +48,7 @@
             this.cardManager.Mix(72);
             this.cardManager.DistributeToAll(this.players);
 
-            this.biddingManager = new BiddingManager(this.teams);
+            this.biddingManager = new BiddingManager(this.teams, this.cardManager);
             this.biddingManager.HandleTurn(this.players[0], new Event { Type = Event.Types.Type.Contract, Contract = new Contract { Type = Contract.Types.Type.Spades, Score = 90 } });
             this.biddingManager.HandleTurn(this.players[1], new Event { Type = Event.Types.Type.Pass });
             this.biddingManager.HandleTurn(this.players[2], new Event { Type = Event.Types.Type.Pass });
@@ -202,8 +202,14 @@
         [TestMethod]
         public void TrickManagerValidAnnounce()
         {
-            this.cardManager.Mix(74);
-            this.cardManager.DistributeToAll(this.players);
+            foreach (Player player in this.players)
+            {
+                Console.WriteLine($"\r\n{player.Name}");
+                foreach (Card card in player.Hand.Card)
+                {
+                    Console.WriteLine($"{card.Value} of {card.Type}");
+                }
+            }
 
             TrickManager trickManager = new TrickManager(this.teams, this.cardManager, 0);
 
@@ -217,12 +223,12 @@
                         Type = Announce.Types.Type.Carre,
                         Card = new Card
                         {
-                            Type = Card.Types.Type.Diamonds,
-                            Value = Card.Types.Value.Jack
+                            Type = Card.Types.Type.Hearts,
+                            Value = Card.Types.Value.Queen
                         }
                     }
                 });
-            Assert.IsTrue(trickManager.Success);
+            Assert.AreEqual((uint)200, trickManager.Reply.Number);
         }
 
         [TestMethod]
