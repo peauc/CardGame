@@ -13,6 +13,7 @@
             this.Round = round;
             this.CardManager = cardManager;
             this.HasEnded = false;
+            this.CardsPlayed = new Dictionary<Player, Card>();
         }
 
         public bool HasEnded { get; private set; }
@@ -50,7 +51,6 @@
                                         new List<string>()
                                     }
                                 };
-            this.CardsPlayed = new Dictionary<Player, Card>();
             this.Reply = null;
             this.Success = false;
         }
@@ -230,15 +230,15 @@
 
         private void HandleRebelote(Player player)
         {
-            if (player.Belote == Player.BeloteState.Declared)
+            if (player.Belote != Player.BeloteState.Done)
             {
-                this.Reply = new Reply { Number = 452, Message = "To announce a REBELOTE you must first announce a BELOTE" };
+                this.Reply = new Reply { Number = 452, Message = "To announce a REBELOTE you must first complete a BELOTE" };
             }
             else
             {
                 this.ToPrompt[player.Team].Add($"{player.Name} has announced a REBELOTE");
                 this.ToPrompt[player.Team.OppositeTeam].Add($"{player.Name} has announced a REBELOTE");
-                player.Belote = Player.BeloteState.Declared;
+                player.Rebelote = Player.BeloteState.Declared;
                 this.Reply = new Reply { Number = 200, Message = "SUCCESS" };
             }
         }
@@ -267,9 +267,10 @@
         {
             if (player.Rebelote == Player.BeloteState.Declared)
             {
-                if (this.CardManager.IsTrumpQueen(message.Card))
+                if (this.CardManager.IsTrumpKing(message.Card))
                 {
                     player.Rebelote = Player.BeloteState.Done;
+                    player.Team.BonusRoundScore += 20;
                     this.ToPrompt[player.Team].Add($"{player.Name} has completed his REBELOTE, your team will be awarded a 20 point bonus.");
                     this.ToPrompt[player.Team.OppositeTeam].Add($"{player.Name} has completed his REBELOTE,the opposite team will be awarded a 20 point bonus.");
                 }
@@ -289,7 +290,7 @@
             this.CheckForRebelote(message, player);
 
             this.Turn++;
-            this.CardsPlayed[player] = message.Card;
+            this.CardsPlayed.Add(player, message.Card);
             this.ToPrompt[player.Team].Add($"{player.Name} has just played a {message.Card.Value.ToString()} of {message.Card.Type.ToString()}.");
             this.ToPrompt[player.Team.OppositeTeam].Add($"{player.Name} has just played a {message.Card.Value.ToString()} of {message.Card.Type.ToString()}.");
             this.Success = true;

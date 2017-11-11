@@ -13,6 +13,12 @@
             this.Player = player;
             this.Type = type;
             this.Reward = this.Type.Score();
+            this.CardsToValidate = new List<AnnounceCard>();
+
+            if ((int)type.MinimumCardValue() < (int)card.Value)
+            {
+                throw new ArgumentException();
+            }
 
             if (this.Type == AnnounceType.Carre)
             {
@@ -27,7 +33,7 @@
                         break;
                 }
 
-                foreach (Card.Types.Type t in Enum.GetValues(typeof(Card.Types.Type)))
+                foreach (Card.Types.Type t in Enum.GetValues(typeof(Card.Types.Type)).OfType<Card.Types.Type>().ToList().Skip(1))
                 {
                     this.CardsToValidate.Add(new AnnounceCard(new Card
                     {
@@ -63,15 +69,18 @@
         {
             foreach (AnnounceCard cardToValidate in this.CardsToValidate)
             {
-                if (cardToValidate.Card.Value == card.Value && cardToValidate.Card.Type == card.Type)
+                if (cardToValidate.Validated == false)
                 {
-                    cardToValidate.Validated = true;
-                    return true;
-                }
+                    if (cardToValidate.Card.Value == card.Value && cardToValidate.Card.Type == card.Type)
+                    {
+                        cardToValidate.Validated = true;
+                        return true;
+                    }
 
-                if (this.Type.OrderMatters())
-                {
-                    return false;
+                    if (this.Type.OrderMatters())
+                    {
+                        return false;
+                    }
                 }
             }
 
@@ -90,7 +99,7 @@
                 return (int)other.Type - (int)this.Type;
             }
 
-            return this.CardsToValidate[0].CompareTo(other.CardsToValidate[0]);
+            return other.CardsToValidate[0].CompareTo(this.CardsToValidate[0]);
         }
 
         public class AnnounceCard

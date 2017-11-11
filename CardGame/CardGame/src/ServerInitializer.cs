@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using DotNetty.Transport.Channels.Sockets;
 using DotNetty.Transport.Channels;
 using DotNetty.Codecs.Protobuf;

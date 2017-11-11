@@ -16,4 +16,7 @@
   <ItemGroup>
     <Compile Remove="src\Server\EmptyClass.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\Server\" />
+  </ItemGroup>
 </Project>

@@ -130,9 +130,9 @@
             {
                 this.Reply = new Reply { Number = 472, Message = "Your team has used COINCHE, you cannot submit a contract anymore." };
             }
-            else if (message.Contract.Score > 160 && message.Contract.Score != 250)
+            else if ((message.Contract.Score > 160 || message.Contract.Score < 80) && message.Contract.Score != 250)
             {
-                this.Reply = new Reply { Number = 473, Message = "Invalid contract, score must be lower than 160 or equal to 250 (CAPOT)." };
+                this.Reply = new Reply { Number = 473, Message = "Invalid contract, score must be between 80 and 160, or equal to 250 (CAPOT)." };
             }
             else if (player.Team.OppositeTeam.IsCapot)
             {
@@ -199,6 +199,7 @@
                 this.ToPrompt[player.Team].Add("Your team used COINCHE");
                 this.ToPrompt[player.Team.OppositeTeam].Add("The opposite team used COINCHE");
                 this.Reply = new Reply { Number = 200, Message = "SUCCESS" };
+                this.TurnsPassed = 2;
                 this.Success = true;
             }
         }
