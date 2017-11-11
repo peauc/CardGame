@@ -1,0 +1,15 @@
+C:\Users\romai\source\repos\CardGame\CardGame\ServerTest\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\romai\source\repos\CardGame\CardGame\ServerTest\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\romai\source\repos\CardGame\CardGame\ServerTest\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\romai\source\repos\CardGame\CardGame\ServerTest\bin\Debug\netcoreapp2.0\ServerTest.deps.json
+C:\Users\romai\source\repos\CardGame\CardGame\ServerTest\bin\Debug\netcoreapp2.0\ServerTest.runtimeconfig.json
+C:\Users\romai\source\repos\CardGame\CardGame\ServerTest\bin\Debug\netcoreapp2.0\ServerTest.runtimeconfig.dev.json
+C:\Users\romai\source\repos\CardGame\CardGame\ServerTest\bin\Debug\netcoreapp2.0\ServerTest.dll
+C:\Users\romai\source\repos\CardGame\CardGame\ServerTest\bin\Debug\netcoreapp2.0\ServerTest.pdb
+C:\Users\romai\source\repos\CardGame\CardGame\ServerTest\bin\Debug\netcoreapp2.0\Server.dll
+C:\Users\romai\source\repos\CardGame\CardGame\ServerTest\bin\Debug\netcoreapp2.0\Server.pdb
+C:\Users\romai\source\repos\CardGame\CardGame\ServerTest\obj\Debug\netcoreapp2.0\ServerTest.csproj.CoreCompileInputs.cache
+C:\Users\romai\source\repos\CardGame\CardGame\ServerTest\obj\Debug\netcoreapp2.0\ServerTest.AssemblyInfoInputs.cache
+C:\Users\romai\source\repos\CardGame\CardGame\ServerTest\obj\Debug\netcoreapp2.0\ServerTest.AssemblyInfo.cs
+C:\Users\romai\source\repos\CardGame\CardGame\ServerTest\obj\Debug\netcoreapp2.0\ServerTest.dll
+C:\Users\romai\source\repos\CardGame\CardGame\ServerTest\obj\Debug\netcoreapp2.0\ServerTest.pdb
