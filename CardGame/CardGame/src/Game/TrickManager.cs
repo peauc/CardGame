@@ -98,8 +98,8 @@
             this.HasEnded = true;
             this.Winner.Team.TricksWon++;
             this.Winner.Team.RoundScore += this.CardManager.GetCardScore(highestCard) + ((this.Round == 7) ? 10 : 0);
-            this.ToPrompt[this.Winner.Team].Add($"{this.Winner} has won the trick and earned {this.CardManager.GetCardScore(highestCard) + ((this.Round == 7) ? 10 : 0)}");
-            this.ToPrompt[this.Winner.Team.OppositeTeam].Add($"{this.Winner} has won the trick and earned {this.CardManager.GetCardScore(highestCard) + ((this.Round == 7) ? 10 : 0)}");
+            this.ToPrompt[this.Winner.Team].Add($"{this.Winner.Name} has won the trick and earned {this.CardManager.GetCardScore(highestCard) + ((this.Round == 7) ? 10 : 0)}");
+            this.ToPrompt[this.Winner.Team.OppositeTeam].Add($"{this.Winner.Name} has won the trick and earned {this.CardManager.GetCardScore(highestCard) + ((this.Round == 7) ? 10 : 0)}");
         }
 
         private void HandlePlay(Event message, Player player)

@@ -6,12 +6,13 @@
 
     public class BiddingManager : IPhaseManager
     {
-        public BiddingManager(Team[] teams)
+        public BiddingManager(Team[] teams, CardManager cardManager)
         {
             this.Teams = teams;
             this.TurnsPassed = 0;
             this.HasEnded = false;
             this.IsContractSetup = false;
+            this.CardManager = cardManager;
         }
 
         public Team[] Teams { get; }
@@ -27,6 +28,8 @@
         public bool Success { get; private set; }
 
         public bool IsContractSetup { get; private set; }
+
+        public CardManager CardManager { get; set; }
 
         public Contract.Types.Type TrumpType { get; private set; }
 
@@ -112,6 +115,8 @@
                         this.ToPrompt[player.Team].Add($"The opposite team {str}");
                         this.ToPrompt[player.Team.OppositeTeam].Add($"Your team {str}");
                     }
+
+                    this.CardManager.CurrentTrump = this.TrumpType;
                 }
             }
         }

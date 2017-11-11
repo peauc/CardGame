@@ -1,6 +1,5 @@
 ﻿namespace Server.Game
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -19,7 +18,7 @@
             this.State = RoundState.Bidding;
             this.Game = game;
             this.Tricks = new List<TrickManager>();
-            this.BiddingManager = new BiddingManager(this.Teams);
+            this.BiddingManager = new BiddingManager(this.Teams, this.CardManager);
             this.PhaseManager = this.BiddingManager;
             this.Game.PlayerManager.SetupForNewRound();
 
@@ -62,12 +61,13 @@
 
             if (this.PhaseManager.ToPrompt != null && this.PhaseManager.ToPrompt.Any())
             {
-                foreach (KeyValuePair<Team, List<string>> keyValuePair in this.PhaseManager.ToPrompt)
+                foreach (Team team in this.Teams)
                 {
-                    foreach (string s in keyValuePair.Value)
+                    List<string> messages = this.PhaseManager.ToPrompt[team];
+                    foreach (string s in messages)
                     {
-                        keyValuePair.Key.Players[0].Prompt(s);
-                        keyValuePair.Key.Players[1].Prompt(s);
+                        team.Players[0].Prompt(s);
+                        team.Players[1].Prompt(s);
                     }
                 }
             }
@@ -91,6 +91,7 @@
                     {
                         this.SetupAnnounces();
                     }
+
                     this.Tricks.Add(new TrickManager(this.Teams, this.CardManager, this.Tricks.Count));
                     this.PhaseManager = this.Tricks.Last();
                     this.Game.PlayerManager.PromptToAll($"Trick {this.Tricks.Count}:");
