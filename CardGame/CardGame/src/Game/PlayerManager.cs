@@ -28,7 +28,7 @@
         {
             foreach (Player player in this.Players)
             {
-                if (p != player && p.Name != player.Name && p.Ctx != player.Ctx)
+                if (p.Ctx != player.Ctx)
                 {
                     player.Prompt(str);
                 }
