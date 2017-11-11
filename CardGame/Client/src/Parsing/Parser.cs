@@ -7,7 +7,7 @@ namespace Client.Parsing
 {
     public class Parser
     {
-        //private BufferedReader _in = new BufferedReader(new InputStreamReader(System.in));
+        private Boolean _shouldQuit { get; set; }
         private IChannel _channel { get; }
         private String _string;
         private Dictionary<String, int> _map = new Dictionary<string, int>();
@@ -19,7 +19,7 @@ namespace Client.Parsing
 
         public Parser(IChannel channel)
         {
-            Console.WriteLine("Constructor");
+            _shouldQuit = false;
             _channel = channel;
             _map.Add("NAME", 0);
             _map.Add("HAND", 1);
@@ -60,34 +60,20 @@ namespace Client.Parsing
 
         public Boolean ShouldParse()
         {
-            try
-            {
-                if (Console.In.Peek() == 100)
-                    return (false);
-                else
-                    return (true);
-                //TODO
-                // return (_in.ready());
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            return (false);
+            return (_shouldQuit);
         }
 
         private void Read()
         {
             _string = Console.ReadLine();
             return;
-            //TODO:
-            //_string = _in.reradLine();
         }
 
         public void Parse()
         {
             try
             {
+                Console.WriteLine("Trying to read");
                 Read();
             }
             catch (Exception e)
@@ -122,7 +108,7 @@ namespace Client.Parsing
                     }
                 case 2:
                     {
-                        Environment.Exit(1);
+                        Quit();
                         break;
                     }
                 case 3:
@@ -176,6 +162,11 @@ namespace Client.Parsing
                         break;
                     }
             }
+        }
+
+        private void Quit()
+        {
+            _shouldQuit = true;
         }
 
         private void Rebelote()
