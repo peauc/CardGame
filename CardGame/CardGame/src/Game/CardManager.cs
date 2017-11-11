@@ -105,14 +105,14 @@
 
         public Contract.Types.Type CurrentTrump { get; set; }
 
-        private List<Card> Cards { get; set; }
+        public List<Card> Cards { get; set; }
 
         private Dictionary<ScoreScale, Dictionary<Card.Types.Value, int>> ScoreByValueByScaleDictionary { get; }
 
-        public void Mix()
+        public void Mix(int seed = -1)
         {
             List<Card> newCards = new List<Card>();
-            Random rnd = new Random();
+            Random rnd = (seed != -1) ? new Random(seed) : new Random();
 
             while (this.Cards.Any())
             {
@@ -129,6 +129,10 @@
             List<int> numberCardsToDistribute = new List<int> { 3, 2, 3 };
             List<Card> cardsToDistribute = new List<Card>();
 
+            foreach (Player player in players)
+            {
+                player.Hand.Card.Clear();
+            }
             cardsToDistribute.AddRange(this.Cards);
             for (int n = 0; n < 3; n++)
             {
