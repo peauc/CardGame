@@ -37,6 +37,19 @@ namespace Server
             AddPlayerToGame(p);
         }
 
+        public void RemovePlayerFromGame(Game.Player p)
+        {
+            Game.Game g;
+            if ((g = FindGameByPlayer(p)) == null)
+                return;
+            g.PlayerManager.Players.Remove(p);
+            if (g.State != Game.Game.GameState.AwaitingPlayers)
+            {
+                g.PlayerManager.PromptToAll("A player has disconnected, game is aborting");
+            }
+            g.ResetGame();
+        }
+
         public Game.Player FindPlayerByContext(IChannelHandlerContext ctx)
         {
             foreach (Game.Game g in GameList)

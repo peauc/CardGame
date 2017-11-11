@@ -117,7 +117,6 @@
                     }
                     if (player.Team == player.Team.OppositeTeam)
                         System.Console.WriteLine("ABORT");
-                    System.Console.WriteLine(this.ToPrompt);
                     this.CardManager.CurrentTrump = this.TrumpType;
                 }
             }

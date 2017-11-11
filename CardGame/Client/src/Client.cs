@@ -21,7 +21,15 @@ namespace Client
             Parsing.Parser Prs = new Parsing.Parser(connection.Channel);
             while (Prs.ShouldParse())
             {
-                Prs.Parse();
+                try
+                {
+                    Prs.Parse();
+                }
+                catch
+                {
+                    Console.WriteLine("Goodbye :)");
+                    return; 
+                }
             }
         }
     }

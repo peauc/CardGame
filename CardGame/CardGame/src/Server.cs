@@ -19,7 +19,7 @@
                  .Option(ChannelOption.SoBacklog, 100)
                  .Handler(new LoggingHandler("LSTN"))
                  .ChildHandler(new ServerInitializer());
-                Console.WriteLine("Input server's port ( enter set default values) ");
+                Console.WriteLine("Input server's port ( enter set default values of \"8090\") ");
                 int Port = 8090;
                 String tmp = Console.ReadLine();
                 if (tmp.Trim().Length != 0)
@@ -37,9 +37,14 @@
 
         private static void Main(string[] args)
         {
-            StartServer();
-            System.Console.WriteLine("Hello World!");
-            System.Console.WriteLine("Hello");
+            try
+            {
+                StartServer();
+            }
+            catch (Exception e) 
+            {
+                Console.WriteLine("Unknown error, aborting");
+            }
         }
     }
 }

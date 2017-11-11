@@ -300,7 +300,6 @@ namespace Client.Parsing
 
         private void Announce(String str)
         {
-            Console.Out.WriteLine("Wait for an update to use ANNOUNCE !");
             if (str.Length == 0)
                 return;
             str = Utils.GetArgument(str);
@@ -330,13 +329,13 @@ namespace Client.Parsing
             }
             foreach (KeyValuePair<CardGame.Protocol.Card.Types.Type, String> e in _color)
             {
-                if (string.Compare(input[3], e.Value, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Compare(input[2], e.Value, StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     CardType = e.Key;
                 }
             }
 
-            if (AnnounceType == CardGame.Protocol.Announce.Types.Type.Undefined || CardType == Card.Types.Type.Undefinedt || CardType == Card.Types.Type.Undefinedt)
+            if (AnnounceType == CardGame.Protocol.Announce.Types.Type.Undefined || CardType == Card.Types.Type.Undefinedt || CardValue == Card.Types.Value.Undefinedv)
             {
                 Console.Error.WriteLine("Syntax error, type ANNOUNCE to have the correc syntax");
             }
