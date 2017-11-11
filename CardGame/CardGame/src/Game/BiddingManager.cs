@@ -115,7 +115,9 @@
                         this.ToPrompt[player.Team].Add($"The opposite team {str}");
                         this.ToPrompt[player.Team.OppositeTeam].Add($"Your team {str}");
                     }
-
+                    if (player.Team == player.Team.OppositeTeam)
+                        System.Console.WriteLine("ABORT");
+                    System.Console.WriteLine(this.ToPrompt);
                     this.CardManager.CurrentTrump = this.TrumpType;
                 }
             }
@@ -167,7 +169,7 @@
                     this.ToPrompt[player.Team].Add($"Your team has made a new contract. " +
                                                    $"score: {message.Contract.Score}, " +
                                                    $"type: {message.Contract.Type.ToString()}.");
-                    this.ToPrompt[player.Team].Add($"The opposite team has made a new contract. " +
+                    this.ToPrompt[player.Team.OppositeTeam].Add($"The opposite team has made a new contract. " +
                                                    $"score: {message.Contract.Score}, " +
                                                    $"type: {message.Contract.Type.ToString()}.");
                 }

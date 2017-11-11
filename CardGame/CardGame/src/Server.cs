@@ -10,7 +10,6 @@
     {
         private static void StartServer()
         {
-            Console.WriteLine("StartServer");
             var EventLoopGroup = new MultithreadEventLoopGroup(1);
             try
             {
@@ -28,7 +27,7 @@
                         Port = 8090;    
                 b.BindAsync(Port).Wait();
                 Console.WriteLine("Finished biding");
-                Console.ReadKey();      
+                for (;;) {}     
             }
             catch (Exception E)
             {

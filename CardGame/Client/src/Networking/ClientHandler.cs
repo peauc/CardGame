@@ -16,6 +16,13 @@ namespace Client.Networking
             base.ChannelActive(context);
         }
 
+        public override void ChannelInactive(IChannelHandlerContext context)
+        {
+            base.ChannelInactive(context);
+            Console.WriteLine("Server has disconnected");
+            Environment.Exit(1);
+        }
+
         protected override void ChannelRead0(IChannelHandlerContext ctx, Message m)
         {
             if (m.Type == CardGame.Protocol.Message.Types.Type.Reply)
