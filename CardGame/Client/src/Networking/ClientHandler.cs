@@ -14,15 +14,6 @@ namespace Client.Networking
         public override void ChannelActive(IChannelHandlerContext context)
         {
             base.ChannelActive(context);
-            Message m = new Message
-            {
-                Type = Message.Types.Type.Prompt,
-                Prompt = new Prompt()
-                {
-                    ToDisplay = { "Hello Server" }
-                }
-            };
-            context.WriteAndFlushAsync(m);
         }
 
         protected override void ChannelRead0(IChannelHandlerContext ctx, Message m)
@@ -42,7 +33,10 @@ namespace Client.Networking
             }
             if (m.Type == CardGame.Protocol.Message.Types.Type.Hand)
             {
-                String hand = Utils.HandToString(m.Hand);
+                foreach (string s in Utils.HandToString(m.Hand))
+                {
+                    Console.WriteLine(s);
+                }
             }
         }
     }

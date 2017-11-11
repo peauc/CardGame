@@ -112,13 +112,13 @@
         private void Start()
         {
             this.CreateTeams();
+            this.PlayerManager.SetupForNewRound();
             this.CurrentRound = new Round(this.Teams, this.CardManager, 0, this);
             this.CurrentRoundIndex = 0;
             this.CurrentPlayerIndex = 0;
             this.PlayerManager.Players[this.CurrentPlayerIndex]
                 .Prompt("It's your turn to play, here is your hand:");
             this.PlayerManager.Players[this.CurrentPlayerIndex].SendHand();
-            this.PlayerManager.SetupForNewRound();
             this.State = GameState.Game;
         }
 

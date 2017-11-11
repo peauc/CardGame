@@ -73,7 +73,6 @@ namespace Client.Parsing
         {
             try
             {
-                Console.WriteLine("Trying to read");
                 Read();
             }
             catch (Exception e)
@@ -83,7 +82,7 @@ namespace Client.Parsing
             int i = -1;
             foreach (KeyValuePair<String, int> m in _map)
             {
-                if (_string.Contains(m.Key))
+                if (_string.IndexOf(m.Key, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
                     i = m.Value;
                 }
@@ -268,7 +267,7 @@ namespace Client.Parsing
             }
             foreach (KeyValuePair<Contract.Types.Type, String> e in _colorContract)
             {
-                if (input[1] == e.Value)
+                if (string.Compare(input[1], e.Value, StringComparison.OrdinalIgnoreCase) == 0)
                 {
 
                     ContractType = e.Key;
@@ -316,21 +315,21 @@ namespace Client.Parsing
             }
             foreach (KeyValuePair<CardGame.Protocol.Announce.Types.Type, String> e in _announces)
             {
-                if (input[0] == e.Value)
+                if (string.Compare(input[0], e.Value, StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     AnnounceType = e.Key;
                 }
             }
             foreach (KeyValuePair<CardGame.Protocol.Card.Types.Value, String> e in _number)
             {
-                if (input[1] == e.Value)
+                if (string.Compare(input[1], e.Value, StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     CardValue = e.Key;
                 }
             }
             foreach (KeyValuePair<CardGame.Protocol.Card.Types.Type, String> e in _color)
             {
-                if (input[2] == e.Value)
+                if (string.Compare(input[3], e.Value, StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     CardType = e.Key;
                 }
@@ -383,7 +382,7 @@ namespace Client.Parsing
             CardGame.Protocol.Card.Types.Type t = Card.Types.Type.Undefinedt;
             foreach (KeyValuePair<CardGame.Protocol.Card.Types.Value, String> e in _number)
             {
-                if (input[0] == e.Value)
+                if (string.Compare(input[0], e.Value, StringComparison.OrdinalIgnoreCase) == 0)
                 {
 
                     v = e.Key;
@@ -391,7 +390,7 @@ namespace Client.Parsing
             }
             foreach (KeyValuePair<CardGame.Protocol.Card.Types.Type, String> e in _color)
             {
-                if (input[1] == e.Value)
+                if (string.Compare(input[1], e.Value, StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     t = e.Key;
                 }
