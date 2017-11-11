@@ -202,6 +202,27 @@
         [TestMethod]
         public void TrickManagerValidAnnounce()
         {
+            this.cardManager.Mix(74);
+            this.cardManager.DistributeToAll(this.players);
+
+            TrickManager trickManager = new TrickManager(this.teams, this.cardManager, 0);
+
+            trickManager.HandleTurn(
+                this.players[0],
+                new Event
+                {
+                    Type = Event.Types.Type.Announce,
+                    Announce = new Announce
+                    {
+                        Type = Announce.Types.Type.Carre,
+                        Card = new Card
+                        {
+                            Type = Card.Types.Type.Diamonds,
+                            Value = Card.Types.Value.Jack
+                        }
+                    }
+                });
+            Assert.IsTrue(trickManager.Success);
         }
 
         [TestMethod]
@@ -236,7 +257,7 @@
                         }
                     }
                 });
-            Assert.IsTrue(trickManager.Success);
+            Assert.IsFalse(trickManager.Success);
         }
 
         [TestMethod]
