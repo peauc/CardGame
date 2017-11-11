@@ -47,7 +47,7 @@
         [TestMethod]
         public void BiddingManagerInvalidCommand()
         {
-            BiddingManager biddingManager = new BiddingManager(this.teams);
+            BiddingManager biddingManager = new BiddingManager(this.teams, this.cardManager);
 
             biddingManager.HandleTurn(this.players[0], new Event { Type = Event.Types.Type.Name, Argument = { "Denis" } });
             Assert.IsFalse(biddingManager.Success);
@@ -56,7 +56,7 @@
         [TestMethod]
         public void BiddingManagerValidSimpleContract()
         {
-            BiddingManager biddingManager = new BiddingManager(this.teams);
+            BiddingManager biddingManager = new BiddingManager(this.teams, this.cardManager);
 
             biddingManager.HandleTurn(this.players[0], new Event { Type = Event.Types.Type.Contract, Contract = new Contract { Type = Contract.Types.Type.Diamonds, Score = 90 } });
             Assert.IsTrue(biddingManager.Success);
@@ -79,7 +79,7 @@
         [TestMethod]
         public void BiddingManagerValidCapot()
         {
-            BiddingManager biddingManager = new BiddingManager(this.teams);
+            BiddingManager biddingManager = new BiddingManager(this.teams, this.cardManager);
 
             biddingManager.HandleTurn(this.players[0], new Event { Type = Event.Types.Type.Contract, Contract = new Contract { Type = Contract.Types.Type.Diamonds, Score = 250 } });
             Assert.IsTrue(biddingManager.Success);
@@ -97,7 +97,7 @@
         [TestMethod]
         public void BiddingManagerValidCoinche()
         {
-            BiddingManager biddingManager = new BiddingManager(this.teams);
+            BiddingManager biddingManager = new BiddingManager(this.teams, this.cardManager);
 
             biddingManager.HandleTurn(this.players[0], new Event { Type = Event.Types.Type.Contract, Contract = new Contract { Type = Contract.Types.Type.Diamonds, Score = 90 } });
             Assert.IsTrue(biddingManager.Success);
@@ -119,7 +119,7 @@
         [TestMethod]
         public void BiddingManagerValidSurcoinche()
         {
-            BiddingManager biddingManager = new BiddingManager(this.teams);
+            BiddingManager biddingManager = new BiddingManager(this.teams, this.cardManager);
 
             biddingManager.HandleTurn(this.players[0], new Event { Type = Event.Types.Type.Contract, Contract = new Contract { Type = Contract.Types.Type.Diamonds, Score = 90 } });
             Assert.IsTrue(biddingManager.Success);
@@ -141,7 +141,7 @@
         [TestMethod]
         public void BiddingManagerInvalidCoincheBecauseOfNoContractToCoinche()
         {
-            BiddingManager biddingManager = new BiddingManager(this.teams);
+            BiddingManager biddingManager = new BiddingManager(this.teams, this.cardManager);
 
             biddingManager.HandleTurn(this.players[0], new Event { Type = Event.Types.Type.Coinche });
             Assert.IsFalse(biddingManager.Success);
@@ -150,7 +150,7 @@
         [TestMethod]
         public void BiddingManagerInvalidCoincheBecauseOfState()
         {
-            BiddingManager biddingManager = new BiddingManager(this.teams);
+            BiddingManager biddingManager = new BiddingManager(this.teams, this.cardManager);
 
             biddingManager.HandleTurn(this.players[0], new Event { Type = Event.Types.Type.Contract, Contract = new Contract { Type = Contract.Types.Type.Diamonds, Score = 90 } });
             Assert.IsTrue(biddingManager.Success);
@@ -165,7 +165,7 @@
         [TestMethod]
         public void BiddingManagerInvalidSurcoincheBecauseOfState()
         {
-            BiddingManager biddingManager = new BiddingManager(this.teams);
+            BiddingManager biddingManager = new BiddingManager(this.teams, this.cardManager);
 
             biddingManager.HandleTurn(this.players[0], new Event { Type = Event.Types.Type.Contract, Contract = new Contract { Type = Contract.Types.Type.Diamonds, Score = 90 } });
             Assert.IsTrue(biddingManager.Success);
@@ -177,7 +177,7 @@
         [TestMethod]
         public void BiddingManagerInvalidContractsBecauseOfScore()
         {
-            BiddingManager biddingManager = new BiddingManager(this.teams);
+            BiddingManager biddingManager = new BiddingManager(this.teams, this.cardManager);
 
             biddingManager.HandleTurn(this.players[0], new Event { Type = Event.Types.Type.Pass });
             Assert.IsTrue(biddingManager.Success);
@@ -215,7 +215,7 @@
         [TestMethod]
         public void BiddingManagerInvalidContractsBecauseOfCapot()
         {
-            BiddingManager biddingManager = new BiddingManager(this.teams);
+            BiddingManager biddingManager = new BiddingManager(this.teams, this.cardManager);
 
             biddingManager.HandleTurn(this.players[0], new Event { Type = Event.Types.Type.Contract, Contract = new Contract { Type = Contract.Types.Type.Diamonds, Score = 250 } });
             Assert.IsTrue(biddingManager.Success);
@@ -227,7 +227,7 @@
         [TestMethod]
         public void BiddingManagerInvalidContractsBecauseOfCoinche()
         {
-            BiddingManager biddingManager = new BiddingManager(this.teams);
+            BiddingManager biddingManager = new BiddingManager(this.teams, this.cardManager);
 
             biddingManager.HandleTurn(this.players[0], new Event { Type = Event.Types.Type.Contract, Contract = new Contract { Type = Contract.Types.Type.Diamonds, Score = 100 } });
             Assert.IsTrue(biddingManager.Success);
@@ -242,7 +242,7 @@
         [TestMethod]
         public void BiddingManagerNotEndedBecauseOfNoContract()
         {
-            BiddingManager biddingManager = new BiddingManager(this.teams);
+            BiddingManager biddingManager = new BiddingManager(this.teams, this.cardManager);
 
             biddingManager.HandleTurn(this.players[0], new Event { Type = Event.Types.Type.Pass });
             Assert.IsTrue(biddingManager.Success);
