@@ -1,5 +1,6 @@
 ﻿namespace Server.Game
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -24,6 +25,15 @@
 
             this.CardManager.Mix();
             this.CardManager.DistributeToAll(this.Game.PlayerManager.Players);
+
+            foreach (Player player in this.Game.PlayerManager.Players)
+            {
+                Console.WriteLine($"\r\n{player.Name}");
+                foreach (Card card in player.Hand.Card)
+                {
+                    Console.WriteLine($"{card.Value} of {card.Type}");
+                }
+            }
 
             this.Game.PlayerManager.PromptToAll($"Round {this.RoundNumber} starting :");
             this.Game.PlayerManager.PromptToAll("Bidding phase :");
