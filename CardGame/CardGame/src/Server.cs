@@ -1,11 +1,7 @@
-﻿namespace CardGame
+﻿namespace Server
 {
     using System;
-    using System.IO;
-    using System.Security.Cryptography.X509Certificates;
-    using System.Threading.Tasks;
     using DotNetty.Handlers.Logging;
-    using DotNetty.Handlers.Tls;
     using DotNetty.Transport.Bootstrapping;
     using DotNetty.Transport.Channels;
     using DotNetty.Transport.Channels.Sockets;
@@ -23,10 +19,16 @@
                  .Channel<TcpServerSocketChannel>()
                  .Option(ChannelOption.SoBacklog, 100)
                  .Handler(new LoggingHandler("LSTN"))
-                 .ChildHandler(new CardGame.src.Server.ServerInitializer());
-                b.BindAsync(8090).Wait();
-                Console.ReadKey();
-                while (true) ;
+                 .ChildHandler(new ServerInitializer());
+                Console.WriteLine("Input server's port ( enter set default values) ");
+                int Port = 8090;
+                String tmp = Console.ReadLine();
+                if (tmp.Trim().Length != 0)
+                    if (!int.TryParse(tmp, out Port))
+                        Port = 8090;    
+                b.BindAsync(Port).Wait();
+                Console.WriteLine("Finished biding");
+                Console.ReadKey();      
             }
             catch (Exception E)
             {

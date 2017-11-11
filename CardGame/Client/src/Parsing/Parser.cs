@@ -62,7 +62,10 @@ namespace Client.Parsing
         {
             try
             {
-                return (false);
+                if (Console.In.Peek() == 100)
+                    return (false);
+                else
+                    return (true);
                 //TODO
                 // return (_in.ready());
             }
@@ -75,6 +78,7 @@ namespace Client.Parsing
 
         private void Read()
         {
+            _string = Console.ReadLine();
             return;
             //TODO:
             //_string = _in.reradLine();

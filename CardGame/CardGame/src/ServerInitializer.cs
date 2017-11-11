@@ -4,7 +4,7 @@ using DotNetty.Transport.Channels;
 using DotNetty.Codecs.Protobuf;
 using CardGame.Protocol;
 
-namespace CardGame.src.Server
+namespace Server
 {
     public class ServerInitializer : ChannelInitializer<TcpSocketChannel>
     {

@@ -11,10 +11,23 @@ namespace Client.Networking
             Console.WriteLine("ClientHandler");
         }
 
+        public override void ChannelActive(IChannelHandlerContext context)
+        {
+            base.ChannelActive(context);
+            Message m = new Message
+            {
+                Type = Message.Types.Type.Prompt,
+                Prompt = new Prompt() {
+                    ToDisplay = {"Hello Server"}
+                }
+         };
+            context.WriteAndFlushAsync(m);
+        }
+
         protected override void ChannelRead0(IChannelHandlerContext ctx, Message msg)
         {
-            Console.WriteLine("ChannelRead0");
             Console.WriteLine(msg.ToString());
+
             BufferedPackets.AddMessage(msg);
         }
     }
