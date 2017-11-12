@@ -77,7 +77,7 @@
             Assert.IsTrue(trickManager.HasEnded);
             Assert.AreEqual(1, this.teams[0].TricksWon);
             Assert.AreEqual(0, this.teams[1].TricksWon);
-            Assert.AreEqual(11, this.teams[0].RoundScore);
+            Assert.AreEqual(17, this.teams[0].RoundScore);
             Assert.AreEqual(0, this.teams[1].RoundScore);
         }
 
@@ -101,7 +101,7 @@
             Assert.IsTrue(trickManager.HasEnded);
             Assert.AreEqual(1, this.teams[0].TricksWon);
             Assert.AreEqual(0, this.teams[1].TricksWon);
-            Assert.AreEqual(21, this.teams[0].RoundScore);
+            Assert.AreEqual(27, this.teams[0].RoundScore);
             Assert.AreEqual(0, this.teams[1].RoundScore);
         }
 
@@ -130,7 +130,7 @@
             Assert.AreEqual(1, this.teams[1].TricksWon);
             Assert.AreEqual(0, this.teams[0].RoundScore);
             Console.WriteLine(this.teams[1].RoundScore);
-            Assert.AreEqual(10, this.teams[1].RoundScore);
+            Assert.AreEqual(14, this.teams[1].RoundScore);
         }
 
         [TestMethod]
@@ -139,15 +139,6 @@
             this.cardManager.Mix(78);
             this.cardManager.DistributeToAll(this.players);
             this.cardManager.CurrentTrump = Contract.Types.Type.Spades;
-
-            foreach (Player player in this.players)
-            {
-                Console.WriteLine($"\r\n{player.Name}");
-                foreach (Card card in player.Hand.Card)
-                {
-                    Console.WriteLine($"{card.Value} of {card.Type}");
-                }
-            }
 
             this.players[2].Belote = Player.BeloteState.Done;
 
@@ -170,15 +161,6 @@
             this.cardManager.Mix(77);
             this.cardManager.DistributeToAll(this.players);
             this.cardManager.CurrentTrump = Contract.Types.Type.Hearts;
-
-            foreach (Player player in this.players)
-            {
-                Console.WriteLine($"\r\n{player.Name}");
-                foreach (Card card in player.Hand.Card)
-                {
-                    Console.WriteLine($"{card.Value} of {card.Type}");
-                }
-            }
 
             this.players[2].Belote = Player.BeloteState.Done;
 
@@ -237,15 +219,6 @@
             this.cardManager.Mix(74);
             this.cardManager.DistributeToAll(this.players);
 
-            foreach (Player player in this.players)
-            {
-                Console.WriteLine($"\r\n{player.Name}");
-                foreach (Card card in player.Hand.Card)
-                {
-                    Console.WriteLine($"{card.Value} of {card.Type}");
-                }
-            }
-
             TrickManager trickManager = new TrickManager(this.teams, this.cardManager, 1);
 
             trickManager.HandleTurn(
@@ -286,15 +259,6 @@
         {
             this.cardManager.Mix(74);
             this.cardManager.DistributeToAll(this.players);
-
-            foreach (Player player in this.players)
-            {
-                Console.WriteLine($"\r\n{player.Name}");
-                foreach (Card card in player.Hand.Card)
-                {
-                    Console.WriteLine($"{card.Value} of {card.Type}");
-                }
-            }
 
             TrickManager trickManager = new TrickManager(this.teams, this.cardManager, 0);
 
