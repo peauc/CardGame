@@ -115,7 +115,8 @@
                         this.ToPrompt[player.Team].Add($"The opposite team {str}");
                         this.ToPrompt[player.Team.OppositeTeam].Add($"Your team {str}");
                     }
-
+                    if (player.Team == player.Team.OppositeTeam)
+                        System.Console.WriteLine("ABORT");
                     this.CardManager.CurrentTrump = this.TrumpType;
                 }
             }

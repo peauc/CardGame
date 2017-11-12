@@ -17,6 +17,7 @@ namespace Server
         {
             foreach (Game.Game g in GameList)
             {
+                Console.WriteLine(g.PlayerManager.Players.Count);
                 if (g.PlayerManager.Players.Count != 4)
                     return (g);
             }
@@ -34,6 +35,19 @@ namespace Server
             }
             CreateNewGame();
             AddPlayerToGame(p);
+        }
+
+        public void RemovePlayerFromGame(Game.Player p)
+        {
+            Game.Game g;
+            if ((g = FindGameByPlayer(p)) == null)
+                return;
+            g.PlayerManager.Players.Remove(p);
+            if (g.State != Game.Game.GameState.AwaitingPlayers)
+            {
+                g.PlayerManager.PromptToAll("A player has disconnected, game is aborting");
+            }
+            g.ResetGame();
         }
 
         public Game.Player FindPlayerByContext(IChannelHandlerContext ctx)

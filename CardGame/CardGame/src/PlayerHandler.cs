@@ -34,6 +34,10 @@
         public override void ChannelInactive(IChannelHandlerContext context)
         {
             base.ChannelInactive(context);
+            var p = Gm.FindPlayerByContext(context);
+            if (p == null)
+                return;
+            Gm.RemovePlayerFromGame(p);
             Console.WriteLine("Client is disconnecting");
         }
 
@@ -42,6 +46,7 @@
             Game.Game G;
             Game.Player P;
 
+            Console.WriteLine(msg);
             if ((P = Gm.FindPlayerByContext(ctx)) == null)
             {
                 Console.WriteLine("Unknown Player");
@@ -53,7 +58,6 @@
                 return;
             }
             G.HandlePlay(msg, P);
-            Console.WriteLine(msg);
 
         }
     }

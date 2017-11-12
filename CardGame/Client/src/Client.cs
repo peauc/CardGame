@@ -16,11 +16,20 @@ namespace Client
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                return;
             }
             Parsing.Parser Prs = new Parsing.Parser(connection.Channel);
             while (Prs.ShouldParse())
             {
-                Prs.Parse();
+                try
+                {
+                    Prs.Parse();
+                }
+                catch
+                {
+                    Console.WriteLine("Goodbye :)");
+                    return; 
+                }
             }
         }
     }

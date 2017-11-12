@@ -106,7 +106,7 @@
             return false;
         }
 
-        private void ResetGame()
+        public void ResetGame()
         {
             this.Teams = new Team[2];
             this.State = GameState.AwaitingPlayers;

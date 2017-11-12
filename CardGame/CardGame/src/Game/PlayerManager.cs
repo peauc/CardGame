@@ -50,7 +50,7 @@
 
         public bool PlayersAreSet()
         {
-            return this.Players.Count == 4 && this.Players.All(player => player.Name == string.Empty);
+            return this.Players.Count == 4 && this.Players.All(player => player.Name != string.Empty);
         }
 
         public Player ContainsPlayer(IChannelHandlerContext ctx)

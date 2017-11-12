@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CardGame.Protocol;
 
 namespace Client
@@ -23,16 +24,19 @@ namespace Client
             return (str.Split(" ").Length == i);
         }
 
-        public static string HandToString(Hand hand)
+        public static List<string> HandToString(Hand hand)
         {
             int i = 0;
             String ret = "";
+            List<String> StringList = new List<String>();
 
             foreach (Card c in hand.Card)
             {
-                ret += "[SERVER] " + i++ + " : " + c.Value.ToString() + " of " + c.Type.ToString() + "\n";
+                ret = "[SERVER] " + i++ + " : " + c.Value.ToString() + " of " + c.Type.ToString();
+                StringList.Add(ret);
+
             }
-            return (ret);
+            return (StringList);
         }
     }
 }

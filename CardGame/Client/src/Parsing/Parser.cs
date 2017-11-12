@@ -60,7 +60,7 @@ namespace Client.Parsing
 
         public Boolean ShouldParse()
         {
-            return (_shouldQuit);
+            return (!_shouldQuit);
         }
 
         private void Read()
@@ -73,7 +73,6 @@ namespace Client.Parsing
         {
             try
             {
-                Console.WriteLine("Trying to read");
                 Read();
             }
             catch (Exception e)
@@ -83,7 +82,8 @@ namespace Client.Parsing
             int i = -1;
             foreach (KeyValuePair<String, int> m in _map)
             {
-                if (_string.Contains(m.Key))
+                //TODO enlever contains plz
+                if (_string.IndexOf(m.Key, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
                     i = m.Value;
                 }
@@ -268,7 +268,7 @@ namespace Client.Parsing
             }
             foreach (KeyValuePair<Contract.Types.Type, String> e in _colorContract)
             {
-                if (input[1] == e.Value)
+                if (string.Compare(input[1], e.Value, StringComparison.OrdinalIgnoreCase) == 0)
                 {
 
                     ContractType = e.Key;
@@ -276,7 +276,7 @@ namespace Client.Parsing
             }
             if (ContractType == CardGame.Protocol.Contract.Types.Type.Undefined)
             {
-                Console.Error.WriteLine("Syntax error, type CONTRACT to have the correc syntax");
+                Console.Error.WriteLine("Syntax error, type CONTRACT to have the correct syntax");
             }
             else
             {
@@ -300,15 +300,14 @@ namespace Client.Parsing
 
         private void Announce(String str)
         {
-            Console.Out.WriteLine("Wait for an update to use ANNOUNCE !");
             if (str.Length == 0)
                 return;
             str = Utils.GetArgument(str);
             String[] input = str.Split(" ");
 
-            CardGame.Protocol.Card.Types.Type CardType = Card.Types.Type.Undefinedt;
-            CardGame.Protocol.Announce.Types.Type AnnounceType = CardGame.Protocol.Announce.Types.Type.Undefined;
-            CardGame.Protocol.Card.Types.Value CardValue = Card.Types.Value.Undefinedv;
+            Card.Types.Type CardType = Card.Types.Type.Undefinedt;
+            Announce.Types.Type AnnounceType = CardGame.Protocol.Announce.Types.Type.Undefined;
+            Card.Types.Value CardValue = Card.Types.Value.Undefinedv;
             if (!Utils.HasArgument(str) || input.Length != 3)
             {
                 Console.Error.WriteLine("ANNOUNCE [CARRE-CENT-CINQUANTE-TIERCE] [SEVEN-EIGHT-NINE-TEN-JACK-QUEEN-KING-ACE] [CLUBS-DIAMONDS-HEARTS-SPADES]");
@@ -316,27 +315,27 @@ namespace Client.Parsing
             }
             foreach (KeyValuePair<CardGame.Protocol.Announce.Types.Type, String> e in _announces)
             {
-                if (input[0] == e.Value)
+                if (string.Compare(input[0], e.Value, StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     AnnounceType = e.Key;
                 }
             }
             foreach (KeyValuePair<CardGame.Protocol.Card.Types.Value, String> e in _number)
             {
-                if (input[1] == e.Value)
+                if (string.Compare(input[1], e.Value, StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     CardValue = e.Key;
                 }
             }
             foreach (KeyValuePair<CardGame.Protocol.Card.Types.Type, String> e in _color)
             {
-                if (input[2] == e.Value)
+                if (string.Compare(input[2], e.Value, StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     CardType = e.Key;
                 }
             }
 
-            if (AnnounceType == CardGame.Protocol.Announce.Types.Type.Undefined || CardType == Card.Types.Type.Undefinedt || CardType == Card.Types.Type.Undefinedt)
+            if (AnnounceType == CardGame.Protocol.Announce.Types.Type.Undefined || CardType == Card.Types.Type.Undefinedt || CardValue == Card.Types.Value.Undefinedv)
             {
                 Console.Error.WriteLine("Syntax error, type ANNOUNCE to have the correc syntax");
             }
@@ -383,7 +382,7 @@ namespace Client.Parsing
             CardGame.Protocol.Card.Types.Type t = Card.Types.Type.Undefinedt;
             foreach (KeyValuePair<CardGame.Protocol.Card.Types.Value, String> e in _number)
             {
-                if (input[0] == e.Value)
+                if (string.Compare(input[0], e.Value, StringComparison.OrdinalIgnoreCase) == 0)
                 {
 
                     v = e.Key;
@@ -391,7 +390,7 @@ namespace Client.Parsing
             }
             foreach (KeyValuePair<CardGame.Protocol.Card.Types.Type, String> e in _color)
             {
-                if (input[1] == e.Value)
+                if (string.Compare(input[1], e.Value, StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     t = e.Key;
                 }
@@ -411,7 +410,7 @@ namespace Client.Parsing
                         }
                     }
                 };
-                 _channel.WriteAndFlushAsync(m);
+                _channel.WriteAndFlushAsync(m);
             }
             else
             {
@@ -435,8 +434,8 @@ namespace Client.Parsing
                 Event = new Event()
                 {
                     Type = Event.Types.Type.Name,
-                    Argument = {arguments}, 
-                } 
+                    Argument = { arguments },
+                }
             };
             _channel.WriteAndFlushAsync(m);
         }
@@ -456,7 +455,7 @@ namespace Client.Parsing
 
         private void PrintHelp()
         {
-            Console.Out.WriteLine("NAME nickname\nHAND\nQUIT\nCONTRACT\nPASS\nCOINCHE\nSURCOINCHE\nPLAY\nLAST\nANNOUNCE\nBELOTE\nREBELOTE\nHELP");
+            Console.Out.WriteLine("NAME\nHAND\nQUIT\nCONTRACT\nPASS\nCOINCHE\nSURCOINCHE\nPLAY\nLAST\nANNOUNCE\nBELOTE\nREBELOTE\nHELP");
         }
     }
 

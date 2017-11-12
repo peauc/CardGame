@@ -33,12 +33,12 @@ namespace Client.Networking
                 .Handler(new ClientInitializer());
             try
             {
-                Console.WriteLine("Please input hostname, enter set default value");
+                Console.WriteLine("Please input hostname, enter set default value of \"127.0.0.1\"");
                 string tmp = Console.In.ReadLine();
                 if (tmp.Trim().Length != 0)
                     Hostname = tmp;
+                Console.WriteLine("Please input port, enter set default value of \"8090\"");
                 tmp = Console.In.ReadLine();
-                Console.WriteLine("Please input port, enter set default value");
                 if (tmp.Trim().Length != 0 && int.TryParse(tmp, out int tmp2))
                     Port = tmp2;
                 Channel = await _Bootstrap.ConnectAsync(Hostname, Port);
