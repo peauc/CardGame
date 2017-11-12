@@ -18,7 +18,6 @@ namespace Client.Networking
 
         public Connection() 
         {
-            Console.WriteLine("Creating new connection");
             Port = 8090;
             Hostname = "127.0.0.1";
         }

@@ -10,13 +10,11 @@ namespace Client.Networking
     {
         public ClientInitializer()
         {
-            Console.WriteLine("Client Initializer");
         }
 
         public override void ChannelActive(IChannelHandlerContext context)
         {
             base.ChannelActive(context);
-            Console.WriteLine("New channel activated");
         }
         protected override void InitChannel(TcpSocketChannel channel)
         {
