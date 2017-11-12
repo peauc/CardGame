@@ -7,29 +7,36 @@ namespace Client
     {
         static public void Main(string[] args)
         {
-            
-            Connection connection = new Connection();
             try
             {
-                connection.Connect().Wait();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return;
-            }
-            Parsing.Parser Prs = new Parsing.Parser(connection.Channel);
-            while (Prs.ShouldParse())
-            {
+                Connection connection = new Connection();
                 try
                 {
-                    Prs.Parse();
+                    connection.Connect().Wait();
                 }
-                catch
+                catch (Exception e)
                 {
-                    Console.WriteLine("Goodbye :)");
-                    return; 
+                    Console.WriteLine(e.Message);
+                    return;
                 }
+                Parsing.Parser Prs = new Parsing.Parser(connection.Channel);
+                while (Prs.ShouldParse())
+                {
+                    try
+                    {
+                        Prs.Parse();
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Goodbye :)");
+                        return;
+                    }
+                }
+            }
+            catch 
+            {
+                Console.WriteLine("Unknown error aborting");
+                return;
             }
         }
     }
