@@ -1,5 +1,7 @@
 ﻿namespace Server.Game
 {
+    using System;
+
     using CardGame.Protocol;
 
     /// <summary>
@@ -21,11 +23,11 @@
 
         public CardManager CardManager { get; private set; }
 
+        public int CurrentRoundIndex { get; set; }
+
         private int CurrentPlayerIndex { get; set; }
 
         private Round CurrentRound { get; set; }
-
-        private int CurrentRoundIndex { get; set; }
 
         public void HandlePlay(Message message, Player player)
         {
@@ -66,6 +68,8 @@
                         this.PlayerManager.Players[this.CurrentPlayerIndex]
                             .Prompt("It's your turn to play, here is your hand:");
                         this.PlayerManager.Players[this.CurrentPlayerIndex].SendHand();
+                        this.PlayerManager.Players[this.CurrentPlayerIndex]
+                            .Prompt(string.Empty);
                         if (this.CurrentRound.HasEnded)
                         {
                             if (this.Teams[0].TotalScore >= 3000 || this.Teams[1].TotalScore >= 3000)
@@ -76,7 +80,7 @@
                             else
                             {
                                 this.CurrentRoundIndex++;
-                                this.CurrentRound = new Round(this.Teams, this.CardManager, this.CurrentRoundIndex, this);
+                                this.CurrentRound = new Round(this);
                             }
                         }
                     }
@@ -114,12 +118,14 @@
         {
             this.CreateTeams();
             this.PlayerManager.SetupForNewRound();
-            this.CurrentRound = new Round(this.Teams, this.CardManager, 0, this);
             this.CurrentRoundIndex = 0;
             this.CurrentPlayerIndex = 0;
+            this.CurrentRound = new Round(this);
             this.PlayerManager.Players[this.CurrentPlayerIndex]
                 .Prompt("It's your turn to play, here is your hand:");
             this.PlayerManager.Players[this.CurrentPlayerIndex].SendHand();
+            this.PlayerManager.Players[this.CurrentPlayerIndex]
+                .Prompt(string.Empty);
             this.State = GameState.Game;
         }
 
@@ -133,6 +139,7 @@
             this.PlayerManager.Players[1].Team = this.Teams[1];
             this.PlayerManager.Players[2].Team = this.Teams[0];
             this.PlayerManager.Players[3].Team = this.Teams[1];
+            this.PlayerManager.PromptToAll(string.Empty);
             this.PlayerManager.PromptToAll($"Team 1 : {this.PlayerManager.Players[0].Name} and {this.PlayerManager.Players[2].Name}");
             this.PlayerManager.PromptToAll($"Team 2 : {this.PlayerManager.Players[1].Name} and {this.PlayerManager.Players[3].Name}");
         }

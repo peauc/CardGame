@@ -1,5 +1,7 @@
 ﻿namespace Server.Game
 {
+    using System;
+
     public static class ScoreManager
     {
         public static void CountScores(PlayerManager playerManager, Team[] teams)
@@ -8,12 +10,6 @@
             Team passers;
             int bonus = 0;
             int takersScoreMultiplier = 1;
-            int passersScoreMultiplier = 1;
-
-            bonus = teams[0].ValidateAnnounces(
-                teams[1].ValidateAnnounces(bonus, playerManager.Players),
-                playerManager.Players);
-            teams[0].BonusRoundScore += bonus;
 
             if (teams[0].Contract != null)
             {
@@ -29,27 +25,32 @@
             if (passers.HasCoinched)
             {
                 takersScoreMultiplier = 2;
-                passersScoreMultiplier = 0;
             }
             else if (takers.HasSurcoinched)
             {
                 takersScoreMultiplier = 4;
-                passersScoreMultiplier = 0;
             }
 
             if (takers.HasValidatedContract() && takers.RoundScore + takers.BonusRoundScore > passers.RoundScore)
             {
-                takers.AwardContractPoints();
+                takers.AwardContractPoints(takersScoreMultiplier);
+                passers.RoundScore += passers.BonusRoundScore;
                 playerManager.PromptToAll("The contract has been fulfilled.");
             }
             else
             {
-                passers.AwardOppositeTeamContract(takers);
+                passers.AwardOppositeTeamContract(takers, takersScoreMultiplier);
                 playerManager.PromptToAll("The contract has not been fulfilled.");
             }
 
-            takers.TotalScore += takers.RoundScore * takersScoreMultiplier;
-            passers.TotalScore += passers.RoundScore * passersScoreMultiplier;
+            bonus = teams[0].ValidateAnnounces(
+                teams[1].ValidateAnnounces(bonus, playerManager.Players),
+                playerManager.Players);
+
+            teams[1].BonusRoundScore += bonus;
+
+            takers.TotalScore += takers.RoundScore + takers.BonusRoundScore;
+            passers.TotalScore += passers.RoundScore + passers.BonusRoundScore;
             playerManager.PromptToAll("Team 1 now has " + teams[0].TotalScore);
             playerManager.PromptToAll("Team 2 now has " + teams[1].TotalScore);
         }

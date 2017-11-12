@@ -94,7 +94,6 @@
         private void HandleEnd()
         {
             this.Winner = this.CardManager.GetCurrentTurnWinner(this.CardsPlayed);
-            Card highestCard = this.CardsPlayed[this.Winner];
 
             int trickScore = this.CardsPlayed.Values.Sum(cardsPlayedValue => this.CardManager.GetCardScore(cardsPlayedValue));
 
@@ -208,11 +207,13 @@
                         this.Reply = new Reply { Number = 462, Message = "Invalid ANNOUNCE." };
                         return;
                 }
+
                 Console.WriteLine($"{announce.Type.ToString()} {announce.Reward}");
                 if (player.Team.Announces == null)
                 {
                     player.Team.Announces = new List<Announce>();
                 }
+
                 player.Team.Announces.Add(announce);
                 this.ToPrompt[player.Team].Add($"{player.Name} has made an ANNOUNCE of strength {announce.Reward}");
                 this.ToPrompt[player.Team.OppositeTeam].Add($"{player.Name} has made an ANNOUNCE of strength {announce.Reward}");

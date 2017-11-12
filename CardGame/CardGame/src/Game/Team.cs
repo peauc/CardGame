@@ -1,5 +1,6 @@
 ﻿namespace Server.Game
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -66,11 +67,12 @@
             Announce best = this.Announces[0];
             foreach (Announce announce in this.Announces)
             {
-                if (best.CompareTo(announce) > 0)
+                if (best.CompareTo(announce) < 0)
                 {
                     best = announce;
                 }
             }
+
             return best;
         }
 
@@ -79,7 +81,7 @@
             int ownScore = 0;
             int otherScore = 0;
 
-            this.RoundScore += bonus;
+            this.BonusRoundScore += bonus;
 
             if (this.Announces == null || !this.Announces.Any())
             {
@@ -94,8 +96,9 @@
                     {
                         player.Prompt(
                             $"{((player.Team == this) ? "Your team" : "The opposite team")} has completed an announce. (type: {announce.Type.ToString()}, reward: {announce.Reward})");
-                        ownScore += announce.Reward;
                     }
+
+                    ownScore += announce.Reward;
                 }
                 else
                 {
@@ -103,8 +106,9 @@
                     {
                         player.Prompt(
                             $"{((player.Team == this) ? "Your team" : "The opposite team")} has failed to complete an announce. (type: {announce.Type.ToString()}, reward: {announce.Reward})");
-                        otherScore += announce.Reward;
                     }
+
+                    otherScore += announce.Reward;
                 }
             }
 
@@ -128,28 +132,49 @@
             return false;
         }
 
-        public void AwardContractPoints()
+        public void AwardContractPoints(int multiplier)
         {
             if (this.IsCapot)
             {
-                this.RoundScore += 500 + this.BonusRoundScore;
+                this.RoundScore += 500;
+                this.RoundScore *= multiplier;
+                this.RoundScore += this.BonusRoundScore;
             }
             else
             {
-                this.RoundScore += this.Contract.Score + this.BonusRoundScore;
+                this.RoundScore += this.Contract.Score;
+                this.RoundScore *= multiplier;
+                this.RoundScore += this.BonusRoundScore;
             }
+            this.BonusRoundScore = 0;
+            this.Contract = null;
         }
 
-        public void AwardOppositeTeamContract(Team oppositeTeam)
+        public void AwardOppositeTeamContract(Team oppositeTeam, int multiplier)
         {
             if (oppositeTeam.IsCapot)
             {
-                this.RoundScore += 500 + oppositeTeam.BonusRoundScore + this.BonusRoundScore;
+                this.RoundScore += 500;
+                this.RoundScore *= multiplier;
+                this.RoundScore += oppositeTeam.BonusRoundScore + this.BonusRoundScore;
             }
             else
             {
-                this.RoundScore += oppositeTeam.Contract.Score + oppositeTeam.BonusRoundScore + this.BonusRoundScore;
+                this.RoundScore += oppositeTeam.Contract.Score;
+                this.RoundScore *= multiplier;
+                this.RoundScore += oppositeTeam.BonusRoundScore + this.BonusRoundScore;
             }
+
+            oppositeTeam.RoundScore = 0;
+            oppositeTeam.BonusRoundScore = 0;
+            oppositeTeam.Contract = null;
+            this.BonusRoundScore = 0;
+        }
+
+        public void Prompt(string str)
+        {
+            this.Players[0].Prompt(str);
+            this.Players[1].Prompt(str);
         }
     }
 }
